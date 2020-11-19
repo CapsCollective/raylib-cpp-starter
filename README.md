@@ -11,4 +11,8 @@ $ make all
 
 3. Enjoy! You can now start programming your game in `src/main.cpp`.
 
+### Notes:
+
+This project currently only supports the Clang compiler. 
+
 If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
