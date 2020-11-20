@@ -14,11 +14,11 @@ I guess we just don't want the added headache. CMake is complex and sometimes fe
 So that being said, we hope that this repository finds you well and wholeheartedly enjoying the *simple things in life* (i.e. video games programming).
 
 ### Current Compatability
-| OS          | Default Compiler | Last Tested On | Working |
-| ----------- | ---------------- |:--------------:|:-------:|
-| **macOS**   | Clang++          | `11.0.1`       | ✅      |
-| **Linux**   | G++              | `N/A`          | ❌      |
-| **Windows** | MinGW            | `N/A`          | ❌      |
+| OS          | Default Compiler |   Last Tested On   | Working |
+| ----------- | ---------------- |:------------------:|:-------:|
+| **macOS**   | Clang++          | `Big Sur 11.0.1`   | ✅      |
+| **Linux**   | G++              | `Ubuntu 20.04 LTS` | ❌      |
+| **Windows** | MinGW            | `N/A`              | ❌      |
 
 ## Getting Started
 1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library file (`.a` on UNIX-based systems and `.lib` on Windows) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
