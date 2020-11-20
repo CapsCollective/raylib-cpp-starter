@@ -25,13 +25,46 @@ So that being said, we hope that this repository finds you well and wholehearted
 ### Installing Dependencies
 
 #### Installing MinGW (Windows only)
-Building [raylib](https://github.com/raysan5/raylib) libraries requires the installation of MinGW ([32](http://www.mingw.org/) and [64](http://mingw-w64.org/doku.php/download) bit versions). Please ensure that all you link MinGW's `bin` directory to your system environment variables for BOTH the 32 and 64 bit versions. You can follow the instructions here for the [32-bit](https://www.youtube.com/watch?v=sXW2VLrQ3Bs) and here for the [64-bit](https://code.visualstudio.com/docs/cpp/config-mingw) bit versions.
+Building raylib libraries requires the installation of MinGW ([32](http://www.mingw.org/) and [64](http://mingw-w64.org/doku.php/download) bit versions). Please ensure that you link MinGW's `bin` directory to your system environment variables for BOTH the 32 and 64 bit versions. You can follow the instructions here for the [32-bit](https://www.youtube.com/watch?v=sXW2VLrQ3Bs) and here for the [64-bit](https://code.visualstudio.com/docs/cpp/config-mingw) bit versions.
 
-After installing MinGW, you should be able to execute basic g++ commands. You can verify this by running the command:
+After installing MinGW, you should have G++ installed. You can verify this by running:
 ```console
-$ g++ --version
+> g++ --version
 g++ (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0
 ```
+
+#### Installing G++ & Make (Linux only)
+Some Linux distributions do not come preinstalled with the basic build tools required to do C/C++ development. In the case that you do not have them, you can install them all with one very handy meta-package aptly named `build-essential` using the following two commands:
+```console
+$ sudo apt update
+$ sudo apt install build-essential
+```
+
+After installing the package, you should have both G++ and Make installed. You can verify this by running:
+```console
+$ g++ --version
+g++ (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+
+$ make --version
+GNU Make 4.2.1
+Built for x86_64-pc-linux-gnu
+```
+
+#### Installing ALSA, Mesa & X11 (Linux only)
+On Linux, raylib is reliant on a number of libraries for audio, graphics, and windowing that may not come preinstalled, these being ALSA, Mesa & X11 respecively. Fortunately they can all be easily installed through your distribution's package manager with just a few lines:
+
+##### Debian/Ubuntu
+```console
+$ sudo apt-get update
+$ sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
+```
+
+##### Fedora
+```console
+$ dnf check-update
+$ sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel
+```
+
 ### Building the Project
 
 1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library file (`.a` on UNIX-based systems or `.lib` on Windows) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
@@ -45,10 +78,10 @@ $ make
 
 #### Windows
 ```console
-$ mingw32-make
+> mingw32-make
 ```
 
-If you see a window pop up with a white background and text then you've successfully set the project up.
+*If you see a window pop up then you've successfully setup the project!*
 
 3. Enjoy! You can now start programming your game from `src/main.cpp`.
 
