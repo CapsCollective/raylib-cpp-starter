@@ -16,9 +16,9 @@ So that being said, we hope that this repository finds you well and wholehearted
 ### Current Compatability
 | OS          | Default Compiler |   Last Tested On   | Working |
 | ----------- | ---------------- | ------------------ |:-------:|
-| **macOS**   | Clang++          | `Big Sur 11.0.1`   | ✅      |
-| **Linux**   | G++              | `Ubuntu 20.04 LTS` | ❌      |
-| **Windows** | MinGW            | `Windows 10 19041` | ✅      |
+| **macOS**   | Clang++          | `Big Sur 11.0.1`   | **✓**   |
+| **Linux**   | G++              | `Ubuntu 20.04 LTS` | **✓**   |
+| **Windows** | MinGW (G++)      | `Windows 10 19041` | **✓**   |
 
 ## Getting Started
 
@@ -34,10 +34,18 @@ g++ (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0
 ```
 
 #### Installing G++ & Make (Linux only)
-Some Linux distributions do not come preinstalled with the basic build tools required to do C/C++ development. In the case that you do not have them, you can install them all with one very handy meta-package aptly named `build-essential` using the following two commands:
+Some Linux distributions do not come preinstalled with the basic build tools required to do C/C++ development. In the case that you do not have them and you're on a Debian-based system, you can install them all with one very handy meta-package aptly named `build-essential`. Otherwise if you're using Fedora, you can install them each individually. Run the following lines to install them:
+
+##### Debian/Ubuntu
 ```console
 $ sudo apt update
 $ sudo apt install build-essential
+```
+
+##### Fedora
+```console
+$ sudo dnf check-update
+$ sudo dnf install make automake gcc gcc-c++ kernel-devel
 ```
 
 After installing the package, you should have both G++ and Make installed. You can verify this by running:
@@ -61,7 +69,7 @@ $ sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi
 
 ##### Fedora
 ```console
-$ dnf check-update
+$ sudo dnf check-update
 $ sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel
 ```
 
@@ -91,7 +99,7 @@ If you wish to change the program entry point, add more libraries, or really any
 
 ## Todo
 - ~~Get static linking to work with C++ bindings~~
-- Setup for at least one compiler on each platform
+- ~~Setup for at least one compiler on each platform~~
 - Test with multiple compilers on each platform
 - Add compiler specification options
 - Add raylib-cpp as vendor for procedural builds and auto-updating

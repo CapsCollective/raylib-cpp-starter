@@ -9,14 +9,14 @@ ifeq ($(OS), Windows_NT)
 	options = -p thread -l opengl32 -l gdi32 -l winmm -m windows  
 else
 	# Check for MacOS/Linux
-	UNAME_S := $(shell uname -s)
-	ifeq ($(UNAME_S), Linux)
+	UNAMEOS := $(shell uname)
+	ifeq ($(UNAMEOS), Linux)
 		# Set Linux macros
 		platform = Linux
 		compiler = g++
-		options = # None
+		options = -l GL -l m -l pthread -l dl -l rt -l X11
 	endif
-	ifeq ($(UNAME_S), Darwin)
+	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
 		platform = macOS
 		compiler = clang++
