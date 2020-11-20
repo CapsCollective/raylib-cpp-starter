@@ -3,11 +3,11 @@ The Raylib C++ Starter kit is a template project that provides a simple starter 
 
 ### Current Compatability
 
-| OS          | Default Compiler | Working |
-| ----------- | ---------------- |:-------:|
-| **macOS**   | Clang++          | ✅      |
-| **Linux**   | G++              | ❌      |
-| **Windows** | MinGW            | ❌      |
+| OS          | Default Compiler | Last Tested On | Working |
+| ----------- | ---------------- | -------------- |:-------:|
+| **macOS**   | Clang++          | 10.9.x         | ✅      |
+| **Linux**   | G++              | N/A            | ❌      |
+| **Windows** | MinGW            | N/A            | ❌      |
 
 ## Getting Started
 1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library file (`.a` on UNIX-based systems and `.lib` on Windows) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
