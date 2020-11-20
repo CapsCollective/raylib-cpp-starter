@@ -18,7 +18,7 @@ So that being said, we hope that this repository finds you well and wholehearted
 | ----------- | ---------------- |:------------------:|:-------:|
 | **macOS**   | Clang++          | `Big Sur 11.0.1`   | ✅      |
 | **Linux**   | G++              | `Ubuntu 20.04 LTS` | ❌      |
-| **Windows** | MinGW            | `N/A`              | ✅      |
+| **Windows** | MinGW            | `Windows 10 19041` | ✅      |
 
 ## Getting Started
 
