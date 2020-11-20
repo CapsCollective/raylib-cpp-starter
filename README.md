@@ -103,6 +103,10 @@ $ make
 
 If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
 
+## Licence
+
+This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check `LICENCE` for further details.
+
 ## Todo
 - [x] Get static linking to work with C++ bindings
 - [x] Setup for at least one compiler on each platform
