@@ -21,7 +21,9 @@ So that being said, we hope that this repository finds you well and wholehearted
 | **Windows** | MinGW            | `N/A`              | ❌      |
 
 ## Getting Started
-1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library file (`.a` on UNIX-based systems and `.lib` on Windows) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
+
+### MacOS
+1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library file (`.a` on UNIX-based systems) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
 
 2. Clone this repository and move the static library file you just generated into the `/lib` directory (go ahead and replace the one included if necessary), and then run the following command for the Makefile in the root directory:
 ```bash
@@ -29,6 +31,24 @@ $ make all
 ```
 
 3. Enjoy! You can now start programming your game from `src/main.cpp`.
+
+### Windows
+Building [raylib](https://github.com/raysan5/raylib) libraries requires the installation of MinGW ([32](http://www.mingw.org/) and [64](http://mingw-w64.org/doku.php/download) bit versions). Please ensure that all you link MinGW's `bin` directory to your system environment variables for BOTH the 32 and 64 bit versions. You can follow the instructions here for the [32-bit](https://www.youtube.com/watch?v=sXW2VLrQ3Bs) and here for the [64-bit](https://code.visualstudio.com/docs/cpp/config-mingw) bit versions.
+
+After installing MinGW, you should be able to execute basic g++ commands. You can verify this by running the command:
+
+```
+$ g++ --version
+$ g++ (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0
+```
+
+With this in place, you should then be able to clone this repository and open up the command prompt from the project root. From there, run the following:
+
+`$ mingw32-make`
+
+This should compile and run the project. If you see a window pop up with a white background and text then you've successfully set the project up. Good luck and have fun! 
+
+### Additional Notes
 
 If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
 
