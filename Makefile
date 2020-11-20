@@ -1,29 +1,30 @@
-# Set platform-specific macros
+# Set macros
+buildFile = ./build/app
+
+# Check for Windows
 ifeq ($(OS), Windows_NT)
-	# Build for Windows
-	libPath = ./lib/Windows/libraylib_static.a
-	buildfile = ./build/app
-	compileCommand = g++ -std=c++17 -I ./include/ -L./lib/Windows ./src/main.cpp -o $(buildfile) -lraylib -pthread -lopengl32 -lgdi32 -lwinmm -mwindows  
+	# Set Windows macros
+	platform = Windows
+	compiler = g++
+	options = -p thread -l opengl32 -l gdi32 -l winmm -m windows  
 else
-	# Build for MacOS/Linux
-	
+	# Check for MacOS/Linux
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S), Linux)
 		# Set Linux macros
+		platform = Linux
 		compiler = g++
-		libPath = ./lib/Linux/libraylib.a
+		options = # None
 	endif
 	ifeq ($(UNAME_S), Darwin)
 		# Set macOS macros
+		platform = macOS
 		compiler = clang++
-		frameworks = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libPath = ./lib/macOS/libraylib.a
+		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 	endif
 	
-	buildfile = ./build/app
 	initCommand = mkdir -p build
-	compileCommand = $(compiler) -std=c++17 $(frameworks) -I ./include/ $(libPath) ./src/main.cpp -o $(buildfile)
-	cleanCommand = rm $(buildfile)
+	cleanCommand = rm $(buildFile)
 endif
 
 all: init compile run clean
@@ -32,10 +33,10 @@ init:
 	$(initCommand)
 
 compile:
-	$(compileCommand)
+	$(compiler) -std=c++17 -I ./include/ -L ./lib/$(platform) ./src/main.cpp -o $(buildFile) -l raylib $(options)
 
 run:
-	$(buildfile)
+	$(buildFile)
 
 clean:
 	$(cleanCommand)
