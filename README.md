@@ -103,13 +103,28 @@ $ make
 
 If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
 
-## Licence
-
-This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check `LICENCE` for further details.
-
 ## Todo
 - [x] Get static linking to work with C++ bindings
 - [x] Setup for at least one compiler on each platform
 - [ ] Test with multiple compilers on each platform
 - [ ] Add compiler specification options
 - [ ] Add raylib-cpp as vendor for procedural builds and auto-updating
+
+## Contributing
+
+### How do I contribute?
+It's pretty simple actually:
+
+1. Fork it from [here](https://github.com/CapsCollective/raylib-cpp-starter/fork)
+2. Create your feature branch (git checkout -b cool-new-feature)
+3. Commit your changes (git commit -m "Added some feature")
+4. Push to the branch (git push origin cool-new-feature)
+5. Create a new pull request for it!
+
+### Contributors
+- [J-Mo63](https://github.com/J-Mo63) Jonathan Moallem - co-creator, maintainer
+- [Raelr](https://github.com/Raelr) Aryeh Zinn - co-creator, maintainer
+
+## Licence
+
+This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check `LICENCE` for further details.
