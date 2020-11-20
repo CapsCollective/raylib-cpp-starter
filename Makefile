@@ -1,7 +1,9 @@
 # Set platform-specific macros
 ifeq ($(OS), Windows_NT)
 	# Build for Windows
-	
+	libPath = ./lib/Windows/libraylib_static.a
+	buildfile = ./build/app
+	compileCommand = g++ -std=c++17 -I ./include/ -m64 -L./lib/Windows -L./include ./src/main.cpp -o $(buildfile) -lraylib -pthread -lopengl32 -lgdi32 -lwinmm -mwindows  
 else
 	# Build for MacOS/Linux
 	
