@@ -12,13 +12,11 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: install Xcode tools
-      run: xcode-select --install
     - name: make
       run: make
     
   ubuntu-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: update apt
