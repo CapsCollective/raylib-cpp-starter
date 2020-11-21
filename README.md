@@ -13,9 +13,9 @@ I guess we just don't want the added headache. CMake is complex and sometimes fe
 
 So that being said, we hope that this repository finds you well and wholeheartedly enjoying the *simple things in life* (i.e. video games programming).
 
-### Current Compatability
+### Current Compatibility
 | OS          | Default Compiler |   Last Built On    |  Status  |
-| ----------- | ---------------- | ------------------ | --------:|
+| ----------- | ---------------- | ------------------ | -------- |
 | **macOS**   | Clang++          | `Big Sur 11.0.1`   | ![macOS Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS-build/badge.svg) |
 | **Linux**   | G++              | `Ubuntu 20.04 LTS` | ![Linux Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/ubuntu-build/badge.svg) |
 | **Windows** | MinGW (G++)      | `Windows 10 19041` |          |
