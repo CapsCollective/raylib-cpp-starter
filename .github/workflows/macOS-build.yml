@@ -1,4 +1,4 @@
-name: Platform Build
+name: macOS-build
 
 on:
   push:
