@@ -12,23 +12,21 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+    - name: install Xcode tools
+      run: xcode-select --install
     - name: make
       run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
     
   ubuntu-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: update apt
+      run: sudo apt-get update
+    - name: install raylib dependencies
+      run: sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
     - name: make
       run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
     
   windows-build:
     runs-on: windows-latest
@@ -36,7 +34,3 @@ jobs:
     - uses: actions/checkout@v2
     - name: make
       run: mingw32-make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
