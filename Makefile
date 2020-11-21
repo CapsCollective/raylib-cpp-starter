@@ -6,7 +6,10 @@ ifeq ($(OS), Windows_NT)
 	# Set Windows macros
 	platform = Windows
 	compiler = g++
-	options = -p thread -l opengl32 -l gdi32 -l winmm -m windows  
+	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+	# Windows-specific commands for creation and deletion
+	initCommand = -mkdir build
+	cleanCommand = del build\app.exe  
 else
 	# Check for MacOS/Linux
 	UNAMEOS := $(shell uname)
