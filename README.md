@@ -16,9 +16,9 @@ So that being said, we hope that this repository finds you well and wholehearted
 ### Current Compatability
 | OS          | Default Compiler |   Last Tested On   |  Status  |
 | ----------- | ---------------- | ------------------ |:--------:|
-| **macOS**   | Clang++          | `Big Sur 11.0.1`   | ![macOS Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS-build.yml/badge.svg) |
-| **Linux**   | G++              | `Ubuntu 20.04 LTS` | ![Linux Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/linux-build.yml/badge.svg) |
-| **Windows** | MinGW (G++)      | `Windows 10 19041` | ![Windows Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/windows-build.yml/badge.svg) |
+| **macOS**   | Clang++          | `Big Sur 11.0.1`   | ![macOS Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS-build/badge.svg) |
+| **Linux**   | G++              | `Ubuntu 20.04 LTS` | ![Linux Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/ubuntu-build/badge.svg) |
+| **Windows** | MinGW (G++)      | `Windows 10 19041` | ![Windows Build Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/windows-build/badge.svg) |
 
 ## Getting Started
 
