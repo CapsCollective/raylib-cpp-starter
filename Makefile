@@ -1,44 +1,62 @@
-# Set macros
-buildFile = ./build/app
+# Set general macros
+buildFile = build/app
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
-	# Set Windows macros
+	# Set Windows compile macros
 	platform = Windows
 	compiler = g++
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
-	# Windows-specific commands for creation and deletion
-	initCommand = -mkdir build
+	
+	# Set Windows commands
+	mkdirCommand = -mkdir
 	cleanCommand = del build\app.exe  
 else
 	# Check for MacOS/Linux
 	UNAMEOS := $(shell uname)
 	ifeq ($(UNAMEOS), Linux)
-		# Set Linux macros
+		# Set Linux compile macros
 		platform = Linux
 		compiler = g++
 		options = -l GL -l m -l pthread -l dl -l rt -l X11
 	endif
 	ifeq ($(UNAMEOS), Darwin)
-		# Set macOS macros
+		# Set macOS compile macros
 		platform = macOS
 		compiler = clang++
 		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 	endif
-	
-	initCommand = mkdir -p build
+
+	# Set UNIX commands
+	mkdirCommand = mkdir -p
 	cleanCommand = rm $(buildFile)
 endif
 
-all: init compile run clean
+run: compile execute clean
 
-init:
-	$(initCommand)
+all: setup compile execute clean
+
+setup: include lib
+
+pull:
+	git submodule init; git submodule update
+	cd vendor/raylib-cpp; git submodule init ; git submodule update
+
+include: pull
+	$(mkdirCommand) include
+	cp vendor/raylib-cpp/vendor/raylib/src/{raylib.h,raymath.h} include
+	cp vendor/raylib-cpp/include/*.hpp include
+
+lib: pull
+	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
+	$(mkdirCommand) lib/$(platform)
+	cp vendor/raylib-cpp/vendor/raylib/src/libraylib.a lib/macOS/libraylib.a
 
 compile:
-	$(compiler) -std=c++17 -I ./include/ -L ./lib/$(platform) ./src/main.cpp -o $(buildFile) -l raylib $(options)
+	$(mkdirCommand) build
+	$(compiler) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
 
-run:
+execute:
 	$(buildFile)
 
 clean:
