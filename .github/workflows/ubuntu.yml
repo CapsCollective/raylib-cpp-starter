@@ -8,7 +8,7 @@ on:
     branches: [ main ]
     
 jobs:    
-  build:
+  compile:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -18,11 +18,7 @@ jobs:
       run: sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
     - name: make setup
       run: make setup
-    - name: make test
-      run: make test   
-    - name: save logs as artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: logs
-        path: .temp/execute.log
+    - name: make compile
+      run: make compile
+    - name: make clean
+      run: make clean

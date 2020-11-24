@@ -1,6 +1,5 @@
 # Set general macros
 buildFile = build/app
-tempDir = .temp
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
@@ -31,52 +30,47 @@ else
 
 	# Set UNIX commands
 	mkdirOptions = -p
-	cleanCommand = rm $(buildFile); rm -rf $(tempDir)
+	cleanCommand = rm $(buildFile)
 endif
 
+# Default target, compiles, executes and cleans
 run: compile execute clean
 
-setup: include lib
+# Lists phony targets for Make compile
 .PHONY: run setup pull compile execute clean
 
-test: compile execute check clean
+# Sets up the project for compiling, creates libs and includes
+setup: include lib
 
+# Pull and update the the build submodules
 pull:
-	# Pull and update the the build submodules
 	git submodule init; git submodule update
 	cd vendor/raylib-cpp; git submodule init; git submodule update
 
+# Copy the relevant header files into includes
 include: pull
-	# Copy the relevant header files into includes
 	mkdir $(mkdirOptions) include
 	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
 	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
 
+# Build the raylib static library file and copy it into lib
 lib: pull
-	# Build the raylib static library file and copy it into lib
 	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 
-compile:
-	# Create the build folder and compile the executable
+build:
 	mkdir $(mkdirOptions) build
+
+# Create the build folder and compile the executable
+compile: build
 	$(compiler) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
 
+# Run the executable
 execute:
-	# Run the executable and push the output to a log file
-	mkdir $(mkdirOptions) $(tempDir)
-	$(buildFile) | tee $(tempDir)/execute.log
+	$(buildFile)
 
+# Clean up all relevant files
 clean:
-	# Clean up all relevant files
 	$(cleanCommand)
-
-check:
-	# Search the execution log for mention of raylib starting
-	$(eval VAR = $(shell grep -c "raylib" $(tempDir)/execute.log))
-	if [ $(VAR) -gt 0 ];\
-	then echo "Application was started";\
-	else echo "Application failed to start"; exit 1;\
-	fi
