@@ -74,7 +74,6 @@ clean:
 
 check:
 	# Search the execution log for mention of raylib starting
-	cat $(tempDir)/execute.log
 	$(eval VAR = $(shell grep -c "raylib" $(tempDir)/execute.log))
 	if [ $(VAR) -gt 0 ];\
 	then echo "Application was started";\
