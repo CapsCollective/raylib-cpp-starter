@@ -14,11 +14,11 @@ I guess we just don't want the added headache. CMake is complex and sometimes fe
 So that being said, we hope that this repository finds you well and wholeheartedly enjoying the *simple things in life* (i.e. video games programming).
 
 ### Current Compatibility
-| OS          | Default Compiler |   Last Built On    |  Status  |
-| ----------- | ---------------- | ------------------ | -------- |
-| **macOS**   | Clang++          | `Big Sur 11.0.1`   | ![macOS Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS/badge.svg)     |
-| **Linux**   | G++              | `Ubuntu 20.04 LTS` | ![Linux Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Ubuntu/badge.svg)    |
-| **Windows** | MinGW (G++)      | `Windows 10 19041` | ![Windows Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Windows/badge.svg) |
+| OS          | Default Compiler |  Last Manual Build  |  Compile Status  |
+| ----------- | ---------------- | ------------------- | ---------------- |
+| **macOS**   | Clang++          | `Big Sur 11.0.1`    | ![macOS Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS/badge.svg) |
+| **Linux**   | G++              | `Ubuntu 20.04 LTS`  | ![Linux Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Ubuntu/badge.svg) |
+| **Windows** | MinGW (G++)      | `Windows 10 19041`  | ![Windows Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Windows/badge.svg) |
 
 ## Getting Started
 
@@ -69,14 +69,6 @@ Unfortunately **we do not yet have automated project setup configured for Window
 
 - It is recommended that your code should go into the `/src` directory, which is automatically included in the compile process when you run `make`.
 - If you wish to change the program entry point from `/src/main.cpp`, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` no smoke and mirrors!
-
-## Todo
-- [x] Get static linking to work with C++ bindings
-- [x] Setup for at least one compiler on each platform
-- [x] Add raylib-cpp as vendor for procedural builds and auto-updating
-- [x] Set up CI/CD with GitHub Actions and Make
-- [ ] Test with multiple compilers on each platform
-- [ ] Add compiler specification options
 
 ## Contributing
 
