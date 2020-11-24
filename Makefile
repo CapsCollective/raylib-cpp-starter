@@ -37,6 +37,7 @@ endif
 run: compile execute clean
 
 setup: include lib
+.PHONY: run setup pull compile execute clean
 
 test: compile execute check clean
 
