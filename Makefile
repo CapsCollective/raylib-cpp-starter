@@ -9,7 +9,6 @@ ifeq ($(OS), Windows_NT)
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
 	
 	# Set Windows commands
-	mkdirCommand = -mkdir
 	cleanCommand = del build\app.exe  
 else
 	# Check for MacOS/Linux
@@ -28,8 +27,8 @@ else
 	endif
 
 	# Set UNIX commands
-	mkdirCommand = mkdir -p
 	cleanCommand = rm $(buildFile)
+	mkdirOptions = -p
 endif
 
 run: compile execute clean
@@ -43,17 +42,17 @@ pull:
 	cd vendor/raylib-cpp; git submodule init ; git submodule update
 
 include: pull
-	$(mkdirCommand) include
+	mkdir $(mkdirOptions) include
 	cp vendor/raylib-cpp/vendor/raylib/src/{raylib.h,raymath.h} include
 	cp vendor/raylib-cpp/include/*.hpp include
 
 lib: pull
 	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
-	$(mkdirCommand) lib/$(platform)
+	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/src/libraylib.a lib/macOS/libraylib.a
 
 compile:
-	$(mkdirCommand) build
+	mkdir $(mkdirOptions) build
 	$(compiler) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
 
 execute:
