@@ -1,5 +1,5 @@
 # Raylib C++ Starter
-The Raylib C++ Starter kit is a template project that provides a simple starter template for the [raylib](https://github.com/raysan5/raylib) game tools library incorporating the [raylib-cpp](https://github.com/robloach/raylib-cpp) C++ bindings and using [Make](https://www.gnu.org/software/make/) for building. The C++ headers link to a static library file of raylib which should be built and replaced on a per-platform basis (recent builds are also included).
+The Raylib C++ Starter kit is a template project that provides a simple starter template for the [raylib](https://github.com/raysan5/raylib) game tools library incorporating the [raylib-cpp](https://github.com/robloach/raylib-cpp) C++ bindings and using [Make](https://www.gnu.org/software/make/) for building. The starter kit can automatcially clone down raylib and the bindings, compile them, and setup the project for build using a static library.
 
 > Why static linking?
 
@@ -69,7 +69,7 @@ On Linux, raylib is reliant on a number of libraries for audio, graphics, and wi
 
 ##### Debian/Ubuntu
 ```console
-$ sudo apt-get update
+$ sudo apt update
 $ sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 
@@ -81,34 +81,55 @@ $ sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel 
 
 ### Building the Project
 
-1. Download the [raylib](https://github.com/raysan5/raylib) repository and generate a static library (`.a` file) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the repository README.
-
-2. Clone this repository and move the static library file you just generated into the `/lib/<platform>` directory (go ahead and replace the one included if necessary), and then run the following command for the Makefile in the project's root directory:
-
 #### macOS & Linux
+Once you have cloned this repository and installed the relevant dependencies for your platform, building the project is as simple as running these two commands in its root directory:
+
 ```console
+$ make setup
 $ make
 ```
 
+The first command will clone in the lastest C++ bindings and targeted version of raylib, copy across any relevant header files into `/includes`, and build a static library file from them, placing it in `/lib`. The second command then compiles, runs and cleans up your project using the source code in `/src/main.cpp`.
+
+*If a window pops up, congratulations, you've successfully built the project and you can now start programming your game!*
+
+
 #### Windows
+Unfortunately **we do not yet have automated project setup configured for Windows**. Below are instructions on how to perform this setup manually.
+
+1. Clone down the [raylib-cpp](https://github.com/robloach/raylib-cpp) bindings and [raylib](https://github.com/raysan5/raylib) repositories from the submodules recursively included:
+
+```console
+> git submodule init
+> git submodule update
+
+> cd vendor/raylib-cpp
+> git submodule init
+> git submodule update
+```
+
+2. Generate a static library (`.a` file) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the raylib README.
+
+3. Clone this repository and move the static library file you just generated into a `/lib/Windows` directory.
+
+4. Run the following command in the project's root directory:
+
 ```console
 > mingw32-make
 ```
 
-*If you see a window pop up then you've successfully setup the project!*
-
-3. Enjoy! You can now start programming your game from `src/main.cpp`.
-
 ### Additional Notes
 
-If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
+- It is recommended that your code should go into the `/src` directory, which is automatically included in the compile process when you run `make`.
+- If you wish to change the program entry point from `/src/main.cpp`, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` no smoke and mirrors!
 
 ## Todo
 - [x] Get static linking to work with C++ bindings
 - [x] Setup for at least one compiler on each platform
+- [x] Add raylib-cpp as vendor for procedural builds and auto-updating
+- [x] Set up CI/CD with GitHub Actions and Make
 - [ ] Test with multiple compilers on each platform
 - [ ] Add compiler specification options
-- [ ] Add raylib-cpp as vendor for procedural builds and auto-updating
 
 ## Contributing
 
