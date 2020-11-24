@@ -19,12 +19,14 @@ else
 		platform = Linux
 		compiler = g++
 		options = -l GL -l m -l pthread -l dl -l rt -l X11
+		libGenDirectory = # Empty
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS compile macros
 		platform = macOS
 		compiler = clang++
 		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
+		libGenDirectory = src
 	endif
 
 	# Set UNIX commands
@@ -41,19 +43,20 @@ test: compile execute check clean
 pull:
 	# Pull and update the the build submodules
 	git submodule init; git submodule update
-	cd vendor/raylib-cpp; git submodule init ; git submodule update
+	cd vendor/raylib-cpp; git submodule init; git submodule update
 
 include: pull
 	# Copy the relevant header files into includes
 	mkdir $(mkdirOptions) include
-	cp vendor/raylib-cpp/vendor/raylib/src/{raylib.h,raymath.h} include
+	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
+	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
 
 lib: pull
 	# Build the raylib static library file and copy it into lib
 	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
 	mkdir $(mkdirOptions) lib/$(platform)
-	cp vendor/raylib-cpp/vendor/raylib/src/libraylib.a lib/macOS/libraylib.a
+	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 
 compile:
 	# Create the build folder and compile the executable
