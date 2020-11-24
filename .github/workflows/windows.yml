@@ -1,4 +1,5 @@
-name: macOS-build
+
+name: windows
 
 on:
   push:
@@ -8,11 +9,9 @@ on:
     branches: [ main ]
     
 jobs:
-  macOS-build:
-    runs-on: macos-latest
+  build:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: make setup
-      run: make setup
     - name: make
-      run: make
+      run: mingw32-make

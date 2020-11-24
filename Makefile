@@ -1,5 +1,6 @@
 # Set general macros
 buildFile = build/app
+tempDir = .temp
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
@@ -27,15 +28,15 @@ else
 	endif
 
 	# Set UNIX commands
-	cleanCommand = rm $(buildFile)
 	mkdirOptions = -p
+	cleanCommand = rm $(buildFile); rm -rf $(tempDir)
 endif
 
 run: compile execute clean
 
-all: setup compile execute clean
-
 setup: include lib
+
+test: compile execute check clean
 
 pull:
 	# Pull and update the the build submodules
@@ -60,9 +61,18 @@ compile:
 	$(compiler) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
 
 execute:
-	$(buildFile)
 	# Run the executable and push the output to a log file
+	mkdir $(mkdirOptions) $(tempDir)
+	$(buildFile) | tee $(tempDir)/execute.log
 
 clean:
 	# Clean up all relevant files
 	$(cleanCommand)
+
+check:
+	# Search the execution log for mention of raylib starting
+	$(eval VAR = $(shell grep -c "raylib" $(tempDir)/execute.log))
+	if [[ $(VAR) -gt 0 ]];\
+	then echo "Application was started";\
+	else echo "Application failed to start"; exit 1;\
+	fi
