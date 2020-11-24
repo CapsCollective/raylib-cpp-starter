@@ -20,3 +20,8 @@ jobs:
       run: make setup
     - name: make test
       run: make test
+    - name: save logs as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: logs
+        path: .temp/execute.log
