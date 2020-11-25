@@ -68,7 +68,7 @@ Unfortunately **we do not yet have automated project setup configured for Window
 ### Additional Notes
 
 - It is recommended that your code should go into the `/src` directory, which is automatically included in the compile process when you run `make`.
-- If you wish to change the program entry point from `/src/main.cpp`, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` no smoke and mirrors!
+- If you wish to change the program entry point from `/src/main.cpp`, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
 
 ## Contributing
 
