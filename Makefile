@@ -33,6 +33,11 @@ else
 	cleanCommand = rm $(buildFile)
 endif
 
+# Explicitly set compiler to platform default if unset
+ifeq ($(CXX),)
+	CXX = $(compiler)
+endif
+
 # Default target, compiles, executes and cleans
 run: compile execute clean
 
@@ -60,12 +65,13 @@ lib: pull
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 
+# Create the build folder
 build:
 	mkdir $(mkdirOptions) build
 
 # Create the build folder and compile the executable
 compile: build
-	$(compiler) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
+	$(CXX) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
 
 # Run the executable
 execute:
