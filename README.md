@@ -65,10 +65,29 @@ Unfortunately **we do not yet have automated project setup configured for Window
 > mingw32-make
 ```
 
-### Additional Notes
+## Using This Template
+Now that you have the project setup and compiling on your system, it's time to start programming! If you aren't already familliar with [raylib](https://github.com/raysan5/raylib), we recommend looking over [this awesome cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html) which lists every function, struct and macro available in the raylib C library. If you want specifics on how to use the C++ bindings, then you should check out the [raylib-cpp](https://github.com/robloach/raylib-cpp) repo, which nicely explains how the bindings work and contains [raylib's examples ported to C++](https://github.com/RobLoach/raylib-cpp/tree/master/examples).
 
-- It is recommended that your code should go into the `/src` directory, which is automatically included in the compile process when you run `make`.
-- If you wish to change the program entry point from `/src/main.cpp`, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` no smoke and mirrors!
+Once you're up and running, we first of all recommend that all your code for the game should go into the `/src` directory, which is automatically included in the compile process when you run Make. The default entry point for the program is `/src/main.cpp` (which is pretty standard). If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
+
+### Specifying a Non-Default Compiler
+If you want to use a compiler for your platform that isn't the default for your system (or potentially you would like to explicitly state it), you can make use of the system-implicit `CXX` variable like so:
+
+#### macOS & Linux
+
+```console
+$ make CXX=g++
+```
+
+#### Windows
+
+```console
+> mingw32-make CXX=g++
+```
+
+### Locking the Raylib Version
+
+*this functionality is currently in testing*
 
 ## Contributing
 
