@@ -13,21 +13,28 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+      
     - name: make setup
+      working-directory: D:/a/raylib-cpp-starter
       run: mingw32-make setup
       shell: cmd
-      working-directory: D:/a/raylib-cpp-starter
       
     - name: make compile
+      working-directory: D:/a/raylib-cpp-starter
       run: mingw32-make compile
+      shell: cmd
+      
     - name: make clean
+      working-directory: D:/a/raylib-cpp-starter
       run: mingw32-make clean
       shell: cmd
-      working-directory: D:/a/raylib-cpp-starter
 
     - name: make compile CXX=g++
+      working-directory: D:/a/raylib-cpp-starter
       run: mingw32-make compile CXX=g++
+      shell: cmd
+  
     - name: make clean
+      working-directory: D:/a/raylib-cpp-starter
       run: mingw32-make clean
       shell: cmd
-      working-directory: D:/a/raylib-cpp-starter
