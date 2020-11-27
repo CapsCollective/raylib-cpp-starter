@@ -71,9 +71,9 @@ ifeq ($(OS), Windows_NT)
 	cd
 	dir
 	dir vendor\raylib-cpp\vendor\raylib\src
-	copy .\vendor\raylib-cpp\vendor\raylib\src\raylib.h include
-	copy .\vendor\raylib-cpp\vendor\raylib\src\raymath.h include
-	copy .\vendor\raylib-cpp\include\*.hpp include
+	xcopy /y .\vendor\raylib-cpp\vendor\raylib\src\raylib.h .\include\raylib.h
+	xcopy /y .\vendor\raylib-cpp\vendor\raylib\src\raymath.h .\include\raymath.h
+	xcopy /y .\vendor\raylib-cpp\include\*.hpp .\include
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
