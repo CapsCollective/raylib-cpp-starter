@@ -14,14 +14,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make setup
-      run: make setup
+      run: mingw32-make setup
       
     - name: make compile
-      run: make compile
+      run: mingw32-make compile
     - name: make clean
-      run: make clean
+      run: mingw32-make clean
 
     - name: make compile CXX=g++
-      run: make compile CXX=g++
+      run: mingw32-make compile CXX=g++
     - name: make clean
-      run: make clean
+      run: mingw32-make clean
