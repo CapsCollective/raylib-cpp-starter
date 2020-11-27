@@ -68,7 +68,7 @@ include: pull
 # Copy commands for Windows
 ifeq ($(OS), Windows_NT)
 	-mkdir $(mkdirOptions) .\include
-	echo the currect working directory is %CD%
+	IF EXIST vendor\raylib-cpp\vendor\raylib\src\raylib.h ECHO exists.
 	dir
 	dir vendor\raylib-cpp\vendor\raylib\src
 	copy .\vendor\raylib-cpp\vendor\raylib\src\raylib.h .\include\raylib.h
