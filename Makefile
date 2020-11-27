@@ -68,7 +68,7 @@ include: pull
 # Copy commands for Windows
 ifeq ($(OS), Windows_NT)
 	-mkdir $(mkdirOptions) .\include
-	cd
+	echo the currect working directory is %CD%
 	dir
 	dir vendor\raylib-cpp\vendor\raylib\src
 	copy .\vendor\raylib-cpp\vendor\raylib\src\raylib.h .\include\raylib.h
