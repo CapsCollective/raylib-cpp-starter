@@ -13,5 +13,15 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: make
-      run: mingw32-make
+    - name: make setup
+      run: make setup
+      
+    - name: make compile
+      run: make compile
+    - name: make clean
+      run: make clean
+
+    - name: make compile CXX=g++
+      run: make compile CXX=g++
+    - name: make clean
+      run: make clean
