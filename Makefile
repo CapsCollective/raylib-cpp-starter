@@ -13,8 +13,6 @@ ifeq ($(OS), Windows_NT)
 	THEN = &&
 	MAKE = mingw32-make
 
-	
-
 	# Set Windows commands
 	cleanCommand = del build\app.exe  
 else
@@ -37,6 +35,7 @@ else
 	# Set UNIX commands
 	mkdirOptions = -p
 	MAKE = make
+	THEN = ;
 
 	# Copy Directories for Unix/Linux
 	RaylibDirectory = vendor/raylib-cpp/vendor/raylib/src/raylib.h
