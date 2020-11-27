@@ -16,20 +16,15 @@ jobs:
       
     - name: make setup
       run: mingw32-make setup
-      shell: cmd
       
     - name: make compile
       run: mingw32-make compile
-      shell: cmd
       
     - name: make clean
       run: mingw32-make clean
-      shell: cmd
 
     - name: make compile CXX=g++
       run: mingw32-make compile CXX=g++
-      shell: cmd
   
     - name: make clean
       run: mingw32-make clean
-      shell: cmd
