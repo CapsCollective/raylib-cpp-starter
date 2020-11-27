@@ -74,10 +74,10 @@ ifeq ($(OS), Windows_NT)
 	dir vendor\raylib-cpp\vendor\raylib
 	dir vendor\raylib-cpp\vendor\raylib\src
 	dir include
-	copy "${CURDIR}\vendor\raylib-cpp\vendor\raylib\src\raylib.h"
-	copy "${CURDIR}\vendor\raylib-cpp\vendor\raylib\src\raylib.h" "${CURDIR}\include\raylib.h"
-	copy "${CURDIR}\vendor\raylib-cpp\vendor\raylib\src\raymath.h" "${CURDIR}\include\raymath.h"
-	copy "${CURDIR}\vendor\raylib-cpp\include\*.hpp" ".\include"
+	copy "vendor\raylib-cpp\vendor\raylib\src\raylib.h"
+	copy "vendor\raylib-cpp\vendor\raylib\src\raylib.h" "include"
+	copy "vendor\raylib-cpp\vendor\raylib\src\raymath.h" "include"
+	copy "vendor\raylib-cpp\include\*.hpp" "include"
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
