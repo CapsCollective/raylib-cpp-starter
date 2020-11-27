@@ -68,17 +68,8 @@ include: pull
 # Copy commands for Windows
 ifeq ($(OS), Windows_NT)
 	-mkdir $(mkdirOptions) .\include
-	dir 
-	cd vendor
-	dir 
-	cd raylib-cpp
-	dir 
-	cd vendor
-	dir
-	cd raylib
-	dir
-	cd src
-	dir
+	dir vendor
+	dir vendor\raylib-cpp
 	copy .\vendor\raylib-cpp\vendor\raylib\src\raylib.h .\include\raylib.h
 	copy .\vendor\raylib-cpp\vendor\raylib\src\raymath.h .\include\raymath.h
 	copy .\vendor\raylib-cpp\include\*.hpp .\include
