@@ -67,12 +67,13 @@ pull:
 include: pull
 # Copy commands for Windows
 ifeq ($(OS), Windows_NT)
-	-mkdir $(mkdirOptions) include
+	-mkdir $(mkdirOptions) .\include
+	cd
 	dir
 	dir vendor\raylib-cpp\vendor\raylib\src
-	copy vendor\raylib-cpp\vendor\raylib\src\raylib.h include
-	copy vendor\raylib-cpp\vendor\raylib\src\raymath.h include
-	copy vendor\raylib-cpp\include\*.hpp include
+	copy .\vendor\raylib-cpp\vendor\raylib\src\raylib.h include
+	copy .\vendor\raylib-cpp\vendor\raylib\src\raymath.h include
+	copy .\vendor\raylib-cpp\include\*.hpp include
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
