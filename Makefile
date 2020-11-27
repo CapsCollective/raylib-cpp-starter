@@ -74,7 +74,6 @@ ifeq ($(OS), Windows_NT)
 	dir vendor\raylib-cpp\vendor\raylib
 	dir vendor\raylib-cpp\vendor\raylib\src
 	dir include
-	copy "vendor\raylib-cpp\vendor\raylib\src\raylib.h"
 	copy "vendor\raylib-cpp\vendor\raylib\src\raylib.h" "include"
 	copy "vendor\raylib-cpp\vendor\raylib\src\raymath.h" "include"
 	copy "vendor\raylib-cpp\include\*.hpp" "include"
