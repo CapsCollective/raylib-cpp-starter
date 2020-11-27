@@ -49,8 +49,7 @@ setup: include lib
 
 # Pull and update the the build submodules
 pull:
-	git submodule init; git submodule update
-	cd vendor/raylib-cpp; git submodule init; git submodule update
+	git submodule update --init --recursive
 
 # Copy the relevant header files into includes
 include: pull
