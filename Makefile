@@ -90,7 +90,7 @@ lib: pull
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(OS), Windows_NT)
 	-mkdir $(mkdirOptions) lib\$(platform)
-	xcopy "vendor\raylib-cpp\vendor\raylib\$(libGenDirectory)\libraylib.a" "lib\$(platform)" 
+	xcopy "vendor\raylib-cpp\vendor\raylib\src\libraylib.a" "lib\Windows\libraylib.a" 
 else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
