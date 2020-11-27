@@ -55,7 +55,6 @@ pull:
 # Copy the relevant header files into includes
 include: pull
 	mkdir $(mkdirOptions) include
-	IF EXIST vendor\raylib-cpp\vendor\raylib\src\raylib.h ECHO vendor\raylib-cpp\vendor\raylib\src\raylib.h exists.
 	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
 	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
