@@ -74,9 +74,9 @@ ifeq ($(OS), Windows_NT)
 	dir vendor\raylib-cpp\vendor\raylib
 	dir vendor\raylib-cpp\vendor\raylib\src
 	dir include
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\raylib.h" "include"
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\raymath.h" "include" 
-	xcopy "vendor\raylib-cpp\include\*.hpp" "include"
+	xcopy /Y /f "vendor\raylib-cpp\vendor\raylib\src\raylib.h" "include"
+	xcopy /Y /f "vendor\raylib-cpp\vendor\raylib\src\raymath.h" "include" 
+	xcopy /Y /f "vendor\raylib-cpp\include\*.hpp" "include"
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
@@ -90,7 +90,7 @@ lib: pull
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(OS), Windows_NT)
 	-mkdir $(mkdirOptions) lib\$(platform)
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\libraylib.a" "lib\Windows\libraylib.a" 
+	xcopy /Y /f "vendor\raylib-cpp\vendor\raylib\src\libraylib.a" "lib\Windows\libraylib.a" 
 else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
