@@ -1,5 +1,6 @@
 # Set general macros
 buildFile = build/app
+libGenDirectory = src
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
@@ -7,7 +8,13 @@ ifeq ($(OS), Windows_NT)
 	platform = Windows
 	compiler = g++
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+
+	# Windows-specific syntax
+	THEN = &&
+	MAKE = mingw32-make
+
 	
+
 	# Set Windows commands
 	cleanCommand = del build\app.exe  
 else
@@ -25,11 +32,16 @@ else
 		platform = macOS
 		compiler = clang++
 		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libGenDirectory = src
 	endif
 
 	# Set UNIX commands
 	mkdirOptions = -p
+	MAKE = make
+
+	# Copy Directories for Unix/Linux
+	RaylibDirectory = vendor/raylib-cpp/vendor/raylib/src/raylib.h
+
+
 	cleanCommand = rm $(buildFile)
 endif
 
@@ -49,22 +61,35 @@ setup: include lib
 
 # Pull and update the the build submodules
 pull:
-	git submodule init; git submodule update
-	cd vendor/raylib-cpp; git submodule init; git submodule update
+	git submodule init $(THEN) git submodule update
+	cd vendor/raylib-cpp $(THEN) git submodule init $(THEN) git submodule update
 
 # Copy the relevant header files into includes
 include: pull
+# Copy commands for Windows
+ifeq ($(OS), Windows_NT)
+	-mkdir $(mkdirOptions) include
+	copy vendor\raylib-cpp\vendor\raylib\src\raylib.h include
+	copy vendor\raylib-cpp\vendor\raylib\src\raymath.h include
+	copy vendor\raylib-cpp\include\*.hpp include
+# Copy commands for UNIX/Linux
+else
 	mkdir $(mkdirOptions) include
 	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
 	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
+endif
 
 # Build the raylib static library file and copy it into lib
 lib: pull
-	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
+	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
+ifeq ($(OS), Windows_NT)
+	-mkdir $(mkdirOptions) lib\$(platform)
+	copy vendor\raylib-cpp\vendor\raylib\$(libGenDirectory)\libraylib.a lib\$(platform)
+else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
-
+endif
 # Create the build folder
 build:
 	mkdir $(mkdirOptions) build
