@@ -42,24 +42,24 @@ endif
 run: compile execute clean
 
 # Lists phony targets for Make compile
-.PHONY: run setup pull compile execute clean
+.PHONY: run setup submodules compile execute clean
 
 # Sets up the project for compiling, creates libs and includes
 setup: include lib
 
 # Pull and update the the build submodules
-pull:
+submodules:
 	git submodule update --init --recursive
 
 # Copy the relevant header files into includes
-include: pull
+include: submodules
 	mkdir $(mkdirOptions) include
 	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
 	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
 
 # Build the raylib static library file and copy it into lib
-lib: pull
+lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src; make PLATFORM=PLATFORM_DESKTOP
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
