@@ -53,7 +53,8 @@ setup: include lib
 submodules:
 	git submodule update --init --recursive
 ifeq ($(platform), Windows)
-	echo if errorlevel gtr 7 exit errorlevel > CheckCopyError.bat
+	echo if errorlevel gtr 7 exit errorlevel > "CheckCopyError.bat"
+	dir
 endif
 
 # Copy the relevant header files into includes
