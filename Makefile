@@ -60,7 +60,7 @@ ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) .\include
 	-robocopy vendor\raylib-cpp\vendor\raylib\src 'include' raylib.h
 	-robocopy vendor\raylib-cpp\vendor\raylib\src 'include' raymath.h
-	-robocopy vendor\raylib-cpp\include 'include' *.hpp
+	-robocopy vendor\raylib-cpp\include 'include'
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
