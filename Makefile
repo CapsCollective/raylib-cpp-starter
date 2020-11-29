@@ -8,10 +8,6 @@ ifeq ($(OS), Windows_NT)
 	platform = Windows
 	compiler = g++
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
-
-	# Set Windows commands
-	THEN = &&
-	cleanCommand = del ${CURDIR}\build\*.exe
 else
 	# Check for MacOS/Linux
 	UNAMEOS = $(shell uname)
@@ -28,10 +24,6 @@ else
 		compiler = clang++
 		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 	endif
-
-	# Set UNIX commands
-	THEN = ;
-	cleanCommand = rm $(buildFile)
 endif
 
 # Explicitly set compiler to platform default if unset
@@ -68,11 +60,12 @@ endif
 
 # Build the raylib static library file and copy it into lib
 lib: submodules
-	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(platform), Windows)
+	cd vendor/raylib-cpp/vendor/raylib/src && $(MAKE) PLATFORM=PLATFORM_DESKTOP
 	-mkdir lib\$(platform)
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
 else
+	cd vendor/raylib-cpp/vendor/raylib/src; $(MAKE) PLATFORM=PLATFORM_DESKTOP
 	mkdir -p lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 endif
@@ -96,4 +89,8 @@ execute:
 
 # Clean up all relevant files
 clean:
-	$(cleanCommand)
+ifeq ($(platform), Windows)
+	del "${CURDIR}\build\*.exe"
+else
+	rm $(buildFile)
+endif
