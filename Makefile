@@ -89,7 +89,7 @@ execute:
 # Clean up all relevant files
 clean:
 ifeq ($(platform), Windows)
-	del build
+	rmdir /S build
 else
 	rm $(buildFile)
 endif
