@@ -30,7 +30,6 @@ else
 	endif
 
 	# Set UNIX commands
-	mkdirOptions = -p
 	THEN = ;
 	cleanCommand = rm $(buildFile)
 endif
@@ -55,15 +54,13 @@ submodules:
 
 # Copy the relevant header files into includes
 include: submodules
-# Copy commands for Windows
 ifeq ($(platform), Windows)
-	-mkdir $(mkdirOptions) .\include
+	-mkdir .\include
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h
 	-robocopy "vendor\raylib-cpp\include" "include" *.hpp
-# Copy commands for UNIX/Linux
 else
-	mkdir $(mkdirOptions) include
+	mkdir -p include
 	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h include/raylib.h
 	cp vendor/raylib-cpp/vendor/raylib/src/raymath.h include/raymath.h
 	cp vendor/raylib-cpp/include/*.hpp include
@@ -73,16 +70,21 @@ endif
 lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(platform), Windows)
-	-mkdir $(mkdirOptions) lib\$(platform)
+	-mkdir lib\$(platform)
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
 else
-	mkdir $(mkdirOptions) lib/$(platform)
+	mkdir -p lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 endif
 
 # Create the build folder
 build:
-	mkdir $(mkdirOptions) build
+ifeq ($(platform), Windows)
+	-mkdir build
+else
+	mkdir -p build
+endif
+	
 
 # Create the build folder and compile the executable
 compile: build
