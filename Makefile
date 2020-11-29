@@ -11,7 +11,7 @@ ifeq ($(OS), Windows_NT)
 
 	# Set Windows commands
 	THEN = &&
-	cleanCommand = del build\app.exe  
+	cleanCommand = del ${CURDIR}\build\app.exe
 else
 	# Check for MacOS/Linux
 	UNAMEOS := $(shell uname)
@@ -93,5 +93,4 @@ execute:
 
 # Clean up all relevant files
 clean:
-	dir build
 	$(cleanCommand)
