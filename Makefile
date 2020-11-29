@@ -9,11 +9,8 @@ ifeq ($(OS), Windows_NT)
 	compiler = g++
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
 
-	# Windows-specific syntax
-	THEN = &&
-	MAKE = mingw32-make
-
 	# Set Windows commands
+	THEN = &&
 	cleanCommand = del build\app.exe  
 else
 	# Check for MacOS/Linux
@@ -34,13 +31,7 @@ else
 
 	# Set UNIX commands
 	mkdirOptions = -p
-	MAKE = make
 	THEN = ;
-
-	# Copy Directories for Unix/Linux
-	RaylibDirectory = vendor/raylib-cpp/vendor/raylib/src/raylib.h
-
-
 	cleanCommand = rm $(buildFile)
 endif
 
@@ -53,27 +44,20 @@ endif
 run: compile execute clean
 
 # Lists phony targets for Make compile
-.PHONY: run setup pull compile execute clean
+.PHONY: run setup submodules compile execute clean
 
 # Sets up the project for compiling, creates libs and includes
 setup: include lib
 
 # Pull and update the the build submodules
-pull:
-	git submodule init $(THEN) git submodule update
-	cd vendor/raylib-cpp $(THEN) git submodule init $(THEN) git submodule update
+submodules:
+	git submodule update --init --recursive
 
 # Copy the relevant header files into includes
-include: pull
+include: submodules
 # Copy commands for Windows
-ifeq ($(OS), Windows_NT)
+ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) .\include
-	dir vendor
-	dir vendor\raylib-cpp
-	dir vendor\raylib-cpp\vendor
-	dir vendor\raylib-cpp\vendor\raylib
-	dir vendor\raylib-cpp\vendor\raylib\src
-	dir include
 	xcopy "vendor\raylib-cpp\vendor\raylib\src\raylib.h" /Y /f "include"
 	xcopy "vendor\raylib-cpp\vendor\raylib\src\raymath.h" /Y /f "include" 
 	xcopy "vendor\raylib-cpp\include\*.hpp" /Y /f "include"
@@ -86,9 +70,9 @@ else
 endif
 
 # Build the raylib static library file and copy it into lib
-lib: pull
+lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
-ifeq ($(OS), Windows_NT)
+ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) lib\$(platform)
 	xcopy "vendor\raylib-cpp\vendor\raylib\src\libraylib.a" /Y /f "lib\Windows\libraylib.a" 
 else
