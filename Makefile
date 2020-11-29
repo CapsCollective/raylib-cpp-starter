@@ -62,9 +62,9 @@ include: submodules
 # Copy commands for Windows
 ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) .\include
-	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h $(THEN) .\CheckCopyError.bat
-	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h $(THEN) .\CheckCopyError.bat
-	robocopy "vendor\raylib-cpp\include" "include" *.hpp $(THEN) .\CheckCopyError.bat
+	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h $(THEN) "CheckCopyError.bat"
+	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h $(THEN) "CheckCopyError.bat"
+	robocopy "vendor\raylib-cpp\include" "include" *.hpp $(THEN) "CheckCopyError.bat"
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
@@ -83,6 +83,7 @@ else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
 endif
+
 # Create the build folder
 build:
 	mkdir $(mkdirOptions) build
