@@ -14,7 +14,7 @@ ifeq ($(OS), Windows_NT)
 	cleanCommand = del ${CURDIR}\build\*.exe
 else
 	# Check for MacOS/Linux
-	UNAMEOS := $(shell uname)
+	UNAMEOS = $(shell uname)
 	ifeq ($(UNAMEOS), Linux)
 		# Set Linux compile macros
 		platform = Linux
@@ -52,19 +52,15 @@ setup: include lib
 # Pull and update the the build submodules
 submodules:
 	git submodule update --init --recursive
-ifeq ($(platform), Windows)
-	echo if errorlevel gtr 7 exit errorlevel > "CheckCopyError.bat"
-	dir
-endif
 
 # Copy the relevant header files into includes
 include: submodules
 # Copy commands for Windows
 ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) .\include
-	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h $(THEN) "CheckCopyError.bat"
-	robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h $(THEN) "CheckCopyError.bat"
-	robocopy "vendor\raylib-cpp\include" "include" *.hpp $(THEN) "CheckCopyError.bat"
+	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h
+	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h
+	-robocopy "vendor\raylib-cpp\include" "include" *.hpp
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
@@ -78,7 +74,7 @@ lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) lib\$(platform)
-	robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a $(THEN) .\CheckCopyError.bat
+	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
 else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
