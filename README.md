@@ -27,43 +27,23 @@ So that being said, we hope that this repository finds you well and wholehearted
 Before building the project, you will need to install all relevant dependencies for your platform so that the project has access to all the tools required, and raylib can compile and link correctly. You can find intructions for installing dependencies on macOS, Linux, and Windows in the [docs file on installing dependencies](https://github.com/CapsCollective/raylib-cpp-starter/blob/main/docs/InstallingDependencies.md).
 
 ### Building the Project
-
-#### macOS & Linux
 Once you have cloned this repository and installed dependencies, building the project is as simple as running these two commands in its root directory:
 
+#### macOS & Linux
 ```console
 $ make setup
 $ make
 ```
 
+#### Windows
+```console
+> mingw32-make setup
+> mingw32-make
+```
+
 The first command will clone in the lastest C++ bindings and targeted version of raylib, copy across any relevant header files into `/includes`, and build a static library file from them, placing it in `/lib`. The second command then compiles, runs and cleans up your project using the source code in `/src/main.cpp`.
 
 *If a window pops up, congratulations, you've successfully built the project and you can now start programming your game!*
-
-
-#### Windows
-Unfortunately **we do not yet have automated project setup configured for Windows**. Below are instructions on how to perform this setup manually.
-
-1. Clone down the [raylib-cpp](https://github.com/robloach/raylib-cpp) bindings and [raylib](https://github.com/raysan5/raylib) repositories from the submodules recursively included:
-
-```console
-> git submodule init
-> git submodule update
-
-> cd vendor/raylib-cpp
-> git submodule init
-> git submodule update
-```
-
-2. Generate a static library (`.a` file) using the [build and installation instructions](https://github.com/raysan5/raylib#build-and-installation) in the raylib README.
-
-3. Clone this repository and move the static library file you just generated into a `/lib/Windows` directory.
-
-4. Run the following command in the project's root directory:
-
-```console
-> mingw32-make
-```
 
 ## Using This Template
 Now that you have the project setup and compiling on your system, it's time to start programming! If you aren't already familliar with [raylib](https://github.com/raysan5/raylib), we recommend looking over [this awesome cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html) which lists every function, struct and macro available in the raylib C library. If you want specifics on how to use the C++ bindings, then you should check out the [raylib-cpp](https://github.com/robloach/raylib-cpp) repo, which nicely explains how the bindings work and contains [raylib's examples ported to C++](https://github.com/RobLoach/raylib-cpp/tree/master/examples).
