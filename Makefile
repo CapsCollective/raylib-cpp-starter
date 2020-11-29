@@ -10,7 +10,7 @@ ifeq ($(OS), Windows_NT)
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
 
 	# Set Windows commands
-	THEN = &
+	THEN = &&
 	cleanCommand = del ${CURDIR}\build\*.exe
 else
 	# Check for MacOS/Linux
