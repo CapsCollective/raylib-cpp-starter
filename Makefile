@@ -77,7 +77,6 @@ ifeq ($(platform), Windows)
 else
 	mkdir -p build
 endif
-	
 
 # Create the build folder and compile the executable
 compile: build
@@ -90,7 +89,7 @@ execute:
 # Clean up all relevant files
 clean:
 ifeq ($(platform), Windows)
-	del "${CURDIR}\build\*.exe"
+	del build
 else
 	rm $(buildFile)
 endif
