@@ -54,7 +54,6 @@ submodules:
 	git submodule update --init --recursive
 ifeq ($(platform), Windows)
 	echo if errorlevel gtr 7 exit errorlevel > CheckCopyError.bat
-	type CheckCopyError.bat
 endif
 
 # Copy the relevant header files into includes
