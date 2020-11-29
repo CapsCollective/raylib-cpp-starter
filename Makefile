@@ -61,7 +61,7 @@ endif
 # Build the raylib static library file and copy it into lib
 lib: submodules
 ifeq ($(platform), Windows)
-	cd vendor/raylib-cpp/vendor/raylib/src && $(MAKE) PLATFORM=PLATFORM_DESKTOP
+	cd vendor/raylib-cpp/vendor/raylib/src && "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
 	-mkdir lib\$(platform)
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
 else
@@ -89,7 +89,7 @@ execute:
 # Clean up all relevant files
 clean:
 ifeq ($(platform), Windows)
-	rmdir /S build
+	del build\app.exe
 else
 	rm $(buildFile)
 endif
