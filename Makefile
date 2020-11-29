@@ -58,9 +58,9 @@ include: submodules
 # Copy commands for Windows
 ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) .\include
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\raylib.h" /Y /f "include"
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\raymath.h" /Y /f "include" 
-	xcopy "vendor\raylib-cpp\include\*.hpp" /Y /f "include"
+	robocopy vendor\raylib-cpp\vendor\raylib\src 'include' raylib.h
+	robocopy vendor\raylib-cpp\vendor\raylib\src 'include' raymath.h
+	robocopy vendor\raylib-cpp\include 'include' *.hpp
 # Copy commands for UNIX/Linux
 else
 	mkdir $(mkdirOptions) include
@@ -74,7 +74,7 @@ lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) $(MAKE) PLATFORM=PLATFORM_DESKTOP
 ifeq ($(platform), Windows)
 	-mkdir $(mkdirOptions) lib\$(platform)
-	xcopy "vendor\raylib-cpp\vendor\raylib\src\libraylib.a" /Y /f "lib\Windows\libraylib.a" 
+	robocopy vendor\raylib-cpp\vendor\raylib\src 'lib\Windows' libraylib.a
 else
 	mkdir $(mkdirOptions) lib/$(platform)
 	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
