@@ -12,8 +12,6 @@ ifeq ($(OS), Windows_NT)
 	# Set Windows commands
 	THEN = &
 	cleanCommand = del ${CURDIR}\build\*.exe
-	echo if errorlevel gtr 7 exit errorlevel > CheckCopyError.bat
-	type CheckError.bat
 else
 	# Check for MacOS/Linux
 	UNAMEOS := $(shell uname)
@@ -50,6 +48,10 @@ run: compile execute clean
 
 # Sets up the project for compiling, creates libs and includes
 setup: include lib
+ifeq ($(platform), Windows)
+	echo if errorlevel gtr 7 exit errorlevel > CheckCopyError.bat
+	type CheckError.bat
+endif
 
 # Pull and update the the build submodules
 submodules:
