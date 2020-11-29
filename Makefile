@@ -12,7 +12,6 @@ ifeq ($(OS), Windows_NT)
 	# Set Windows commands
 	THEN = &
 	cleanCommand = del ${CURDIR}\build\*.exe
-	
 	echo if errorlevel gtr 7 exit errorlevel > CheckCopyError.bat
 	type CheckError.bat
 else
