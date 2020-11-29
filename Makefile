@@ -89,7 +89,8 @@ execute:
 # Clean up all relevant files
 clean:
 ifeq ($(platform), Windows)
-	del build\app.exe
+	dir
+	del \build\app.exe
 else
 	rm $(buildFile)
 endif
