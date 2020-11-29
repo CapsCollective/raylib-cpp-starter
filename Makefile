@@ -62,7 +62,7 @@ ifeq ($(platform), Windows)
 	if errorlevel gtr 7 exit errorlevel
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raymath.h
 	if errorlevel gtr 7 exit errorlevel
-	-robocopy "vendor\raylib-cpp\include" "include" *.hpp $(THEN)
+	-robocopy "vendor\raylib-cpp\include" "include" *.hpp
 	if errorlevel gtr 7 exit errorlevel
 # Copy commands for UNIX/Linux
 else
