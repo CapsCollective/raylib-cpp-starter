@@ -90,7 +90,7 @@ execute:
 clean:
 ifeq ($(platform), Windows)
 	dir
-	dir \build
+	dir build
 	del D:\a\raylib-cpp-starter\raylib-cpp-starter\build\app.exe
 else
 	rm $(buildFile)
