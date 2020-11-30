@@ -91,7 +91,7 @@ clean:
 ifeq ($(platform), Windows)
 	dir
 	dir build
-	erase build\*.exe
+	erase build
 else
 	rm $(buildFile)
 endif
