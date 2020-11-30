@@ -56,7 +56,7 @@ ifeq ($(platform), Windows)
 	-robocopy "vendor\raylib-cpp\include" "include" *.hpp
 else
 	mkdir -p include
-	cp vendor/raylib-cpp/vendor/raylib/src/{raylib.h,raymath.h} include
+	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h vendor/raylib-cpp/vendor/raylib/src/raymath.h include
 	cp vendor/raylib-cpp/include/*.hpp include
 endif
 
