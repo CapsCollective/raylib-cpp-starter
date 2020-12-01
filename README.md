@@ -14,17 +14,17 @@ I guess we just don't want the added headache. CMake is complex and sometimes fe
 So that being said, we hope that this repository finds you well and wholeheartedly enjoying the *simple things in life* (i.e. video games programming).
 
 ### Current Compatibility
-| OS          | Default Compiler |  Last Manual Build  |  Compile Status  |
-| ----------- | ---------------- | ------------------- | ---------------- |
-| **macOS**   | Clang++          | `Big Sur 11.0.1`    | ![macOS Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/macOS/badge.svg) |
-| **Linux**   | G++              | `Ubuntu 20.04 LTS`  | ![Linux Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Ubuntu/badge.svg) |
-| **Windows** | MinGW (G++)      | `Windows 10 19041`  | ![Windows Status](https://github.com/CapsCollective/raylib-cpp-starter/workflows/Windows/badge.svg) |
+| OS          | Default Compiler |  Last Manual Build  |                   Compile Status                     |
+| ----------- | ---------------- | ------------------- | ---------------------------------------------------- |
+| **macOS**   | Clang++          | `Big Sur 11.0.1`    | ![macOS Status](../../workflows/macOS/badge.svg)     |
+| **Linux**   | G++              | `Ubuntu 20.04 LTS`  | ![Linux Status](../../workflows/Ubuntu/badge.svg)    |
+| **Windows** | MinGW (G++)      | `Windows 10 19041`  | ![Windows Status](../../workflows/Windows/badge.svg) |
 
 ## Getting Started
 
 ### Installing Dependencies
 
-Before building the project, you will need to install all relevant dependencies for your platform so that the project has access to all the tools required, and raylib can compile and link correctly. You can find intructions for installing dependencies on macOS, Linux, and Windows in the [docs file on installing dependencies](https://github.com/CapsCollective/raylib-cpp-starter/blob/main/docs/InstallingDependencies.md).
+Before building the project, you will need to install all relevant dependencies for your platform so that the project has access to all the tools required, and raylib can compile and link correctly. You can find intructions for installing dependencies on macOS, Linux, and Windows in the [docs file on installing dependencies](docs/InstallingDependencies.md).
 
 ### Building the Project
 Once you have cloned this repository and installed dependencies, building the project is as simple as running these two commands in its root directory:
@@ -48,7 +48,7 @@ The first command will clone in the lastest C++ bindings and targeted version of
 ## Using This Template
 Now that you have the project setup and compiling on your system, it's time to start programming! If you aren't already familliar with [raylib](https://github.com/raysan5/raylib), we recommend looking over [this awesome cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html) which lists every function, struct and macro available in the raylib C library. If you want specifics on how to use the C++ bindings, then you should check out the [raylib-cpp](https://github.com/robloach/raylib-cpp) repo, which nicely explains how the bindings work and contains [raylib's examples ported to C++](https://github.com/RobLoach/raylib-cpp/tree/master/examples).
 
-Once you're up and running, we first of all recommend that all your code for the game should go into the `/src` directory, which is automatically included in the compile process when you run Make. The default entry point for the program is `/src/main.cpp` (which is pretty standard). If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the `Makefile` - no smoke and mirrors!
+Once you're up and running, we first of all recommend that all your code for the game should go into the `/src` directory, which is automatically included in the compile process when you run Make. The default entry point for the program is `/src/main.cpp` (which is pretty standard). If you wish to change the program entry point, add more libraries, or really anything about your project, all build instructions are specified in the [`Makefile`](Makefile) - no smoke and mirrors!
 
 ### Specifying a Non-Default Compiler
 If you want to use a compiler for your platform that isn't the default for your system (or potentially you would like to explicitly state it), you can make use of the system-implicit `CXX` variable like so:
@@ -86,4 +86,4 @@ It's pretty simple actually:
 
 ## Licence
 
-This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check `LICENCE` for further details.
+This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check [`LICENCE`](LICENCE) for further details.
