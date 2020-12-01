@@ -7,6 +7,7 @@ ifeq ($(OS), Windows_NT)
 	platform = Windows
 	compiler = g++
 	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+	sources = src/main.cpp
 	THEN = &&
 else
 	# Check for MacOS/Linux
@@ -27,6 +28,7 @@ else
 	endif
 
 	# Set UNIX macros
+	sources = $(shell find src -type f -name '*.cpp')
 	THEN = ;
 endif
 
@@ -81,7 +83,7 @@ endif
 
 # Create the build folder and compile the executable
 compile: build
-	$(CXX) -std=c++17 -I include -L lib/$(platform) src/main.cpp -o $(buildFile) -l raylib $(options)
+	$(CXX) -std=c++17 -I include -L lib/$(platform) $(sources) -o $(buildFile) -l raylib $(options)
 
 # Run the executable
 execute:
