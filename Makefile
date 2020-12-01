@@ -35,13 +35,13 @@ ifeq ($(CXX),)
 	CXX = $(compiler)
 endif
 
+# Lists phony targets for Makefile
+.PHONY: all setup submodules compile execute clean
+
 # Default target, compiles, executes and cleans
-run: compile execute clean
+all: compile execute clean
 
-# Lists phony targets for Make compile
-.PHONY: run setup submodules compile execute clean
-
-# Sets up the project for compiling, creates libs and includes
+# Sets up the project for compiling, generates includes and libs
 setup: include lib
 
 # Pull and update the the build submodules
