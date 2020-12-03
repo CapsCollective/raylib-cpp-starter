@@ -8,6 +8,7 @@ executable := app
 target := $(buildDir)/$(executable)
 sources := $(call rwildcard,src/,*.cpp)
 objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
+depends := $(patsubst %.o, %.d, $(objects))
 compileFlags := -std=c++17 -I include
 linkFlags = -L lib/$(platform) -l raylib
 
@@ -20,9 +21,9 @@ ifeq ($(OS), Windows_NT)
 	libGenDir := src
 	THEN := &&
 	PATHSEP := \$(BLANK)
-    MKDIR := -mkdir
-    RM := -del /q
-    COPY = -robocopy "$(call platformpth,$1)" "$(call platformpth,$2)" $3
+	MKDIR := -mkdir
+	RM := -del /q
+	COPY = -robocopy "$(call platformpth,$1)" "$(call platformpth,$2)" $3
 else
 	# Check for MacOS/Linux
 	UNAMEOS := $(shell uname)
@@ -78,10 +79,13 @@ lib: submodules
 $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 
+# Add all rules from dependency files
+-include $(depends)
+
 # Compile objects to the build directory
-$(buildDir)/%.o: src/%.cpp
+$(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
-	$(CXX) -c $(compileFlags) $< -o $@
+	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@
 
 # Run the executable
 execute:
