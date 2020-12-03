@@ -1,4 +1,3 @@
-
 name: Windows
 
 on:
@@ -18,16 +17,16 @@ jobs:
       run: mingw32-make setup
       shell: cmd
       
-    - name: make compile
-      run: mingw32-make compile
+    - name: make bin/app
+      run: mingw32-make bin/app
       shell: cmd
       
     - name: make clean
       run: mingw32-make clean
       shell: cmd
 
-    - name: make compile CXX=g++
-      run: mingw32-make compile CXX=g++
+    - name: make bin/app CXX=g++
+      run: mingw32-make bin/app CXX=g++
       shell: cmd
   
     - name: make clean

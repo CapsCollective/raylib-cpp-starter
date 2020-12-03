@@ -19,12 +19,12 @@ jobs:
     - name: make setup
       run: make setup
 
-    - name: make compile
-      run: make compile
+    - name: make bin/app
+      run: make bin/app
     - name: make clean
       run: make clean
       
-    - name: make compile CXX=g++
-      run: make compile CXX=g++
+    - name: make bin/app CXX=g++
+      run: make bin/app CXX=g++
     - name: make clean
       run: make clean
