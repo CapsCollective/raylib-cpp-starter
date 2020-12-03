@@ -1,13 +1,21 @@
-# Set general macros
-buildFile = build/app
+# Define custom functions
+rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+
+# Set global macros
+buildDir = bin
+executable = app
+target = $(buildDir)/$(executable)
+sources = $(call rwildcard,src/,*.cpp)
+objects = $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
+compileFlags = -std=c++17 -I include
+linkFlags = -L lib/$(platform) -l raylib
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
 	# Set Windows macros
 	platform = Windows
-	compiler = g++
-	options = -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
-	sources = src/main.cpp
+	CXX ?= g++
+	linkFlags += -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
 	THEN = &&
 else
 	# Check for MacOS/Linux
@@ -15,33 +23,26 @@ else
 	ifeq ($(UNAMEOS), Linux)
 		# Set Linux macros
 		platform = Linux
-		compiler = g++
-		options = -l GL -l m -l pthread -l dl -l rt -l X11
-		libGenDirectory = # Empty
+		CXX ?= g++
+		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
 		platform = macOS
-		compiler = clang++
-		options = -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libGenDirectory = src
+		CXX ?= clang++
+		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
+		libGenDir = src
 	endif
 
 	# Set UNIX macros
-	sources = $(shell find src -type f -name '*.cpp')
 	THEN = ;
 endif
 
-# Explicitly set compiler to platform default if unset
-ifeq ($(CXX),)
-	CXX = $(compiler)
-endif
-
 # Lists phony targets for Makefile
-.PHONY: all setup submodules compile execute clean
+.PHONY: all setup submodules execute clean
 
 # Default target, compiles, executes and cleans
-all: compile execute clean
+all: $(target) execute clean
 
 # Sets up the project for compiling, generates includes and libs
 setup: include lib
@@ -70,29 +71,30 @@ ifeq ($(platform), Windows)
 	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
 else
 	mkdir -p lib/$(platform)
-	cp vendor/raylib-cpp/vendor/raylib/$(libGenDirectory)/libraylib.a lib/$(platform)/libraylib.a
+	cp vendor/raylib-cpp/vendor/raylib/$(libGenDir)/libraylib.a lib/$(platform)/libraylib.a
 endif
 
-# Create the build folder
-build:
+# Link the program and create the executable
+$(target): $(objects)
+	$(CXX) $(objects) -o $(target) $(linkFlags)
+
+# Compile objects to the build directory
+$(buildDir)/%.o: src/%.cpp
 ifeq ($(platform), Windows)
-	-mkdir build
+	-mkdir $(@D)
 else
-	mkdir -p build
+	mkdir -p $(@D)
 endif
-
-# Create the build folder and compile the executable
-compile: build
-	$(CXX) -std=c++17 -I include -L lib/$(platform) $(sources) -o $(buildFile) -l raylib $(options)
+	$(CXX) -c $(compileFlags) $< -o $@
 
 # Run the executable
 execute:
-	$(buildFile)
+	$(target)
 
 # Clean up all relevant files
 clean:
 ifeq ($(platform), Windows)
-	-del build\app.exe
+	-del /S $(buildDir)\*
 else
-	rm $(buildFile)
+	rm -rf $(buildDir)/*
 endif
