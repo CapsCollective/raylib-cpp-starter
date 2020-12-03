@@ -1,41 +1,51 @@
 # Define custom functions
 rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+platformpth = $(subst /,$(PATHSEP),$1)
 
 # Set global macros
-buildDir = bin
-executable = app
-target = $(buildDir)/$(executable)
-sources = $(call rwildcard,src/,*.cpp)
-objects = $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
-compileFlags = -std=c++17 -I include
+buildDir := bin
+executable := app
+target := $(buildDir)/$(executable)
+sources := $(call rwildcard,src/,*.cpp)
+objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
+compileFlags := -std=c++17 -I include
 linkFlags = -L lib/$(platform) -l raylib
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
 	# Set Windows macros
-	platform = Windows
+	platform := Windows
 	CXX ?= g++
-	linkFlags += -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
-	THEN = &&
+	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+	libGenDir := src
+	THEN := &&
+	PATHSEP := \$(BLANK)
+    MKDIR := -mkdir
+    RM := -del /q
+    COPY = -robocopy "$(call platformpth,$1)" "$(call platformpth,$2)" $3
 else
 	# Check for MacOS/Linux
-	UNAMEOS = $(shell uname)
+	UNAMEOS := $(shell uname)
 	ifeq ($(UNAMEOS), Linux)
 		# Set Linux macros
-		platform = Linux
+		platform := Linux
 		CXX ?= g++
 		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
-		platform = macOS
+		platform := macOS
 		CXX ?= clang++
 		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libGenDir = src
+		libGenDir := src
 	endif
 
 	# Set UNIX macros
-	THEN = ;
+	THEN := ;
+	PATHSEP := /
+	MKDIR := mkdir -p
+	RM := rm -rf
+	COPY = cp $1$(PATHSEP)$3 $2
 endif
 
 # Lists phony targets for Makefile
@@ -53,26 +63,16 @@ submodules:
 
 # Copy the relevant header files into includes
 include: submodules
-ifeq ($(platform), Windows)
-	-mkdir .\include
-	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "include" raylib.h raymath.h
-	-robocopy "vendor\raylib-cpp\include" "include" *.hpp
-else
-	mkdir -p include
-	cp vendor/raylib-cpp/vendor/raylib/src/raylib.h vendor/raylib-cpp/vendor/raylib/src/raymath.h include
-	cp vendor/raylib-cpp/include/*.hpp include
-endif
+	$(MKDIR) $(call platformpth, ./include)
+	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raylib.h)
+	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raymath.h)
+	$(call COPY,vendor/raylib-cpp/include,./include,*.hpp)
 
 # Build the raylib static library file and copy it into lib
 lib: submodules
 	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
-ifeq ($(platform), Windows)
-	-mkdir lib\$(platform)
-	-robocopy "vendor\raylib-cpp\vendor\raylib\src" "lib\Windows" libraylib.a
-else
-	mkdir -p lib/$(platform)
-	cp vendor/raylib-cpp/vendor/raylib/$(libGenDir)/libraylib.a lib/$(platform)/libraylib.a
-endif
+	$(MKDIR) $(call platformpth, lib/$(platform))
+	$(call COPY,vendor/raylib-cpp/vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
 
 # Link the program and create the executable
 $(target): $(objects)
@@ -80,11 +80,7 @@ $(target): $(objects)
 
 # Compile objects to the build directory
 $(buildDir)/%.o: src/%.cpp
-ifeq ($(platform), Windows)
-	-mkdir $(@D)
-else
-	mkdir -p $(@D)
-endif
+	$(MKDIR) $(call platformpth, $(@D))
 	$(CXX) -c $(compileFlags) $< -o $@
 
 # Run the executable
@@ -93,8 +89,4 @@ execute:
 
 # Clean up all relevant files
 clean:
-ifeq ($(platform), Windows)
-	-del /S $(buildDir)\*
-else
-	rm -rf $(buildDir)/*
-endif
+	$(RM) $(call platformpth, $(buildDir)/*)
