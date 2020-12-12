@@ -82,7 +82,7 @@ For working with some projects, you may want to pass arguments to the program on
 #### macOS & Linux
 
 ```console
-$ make AGRS="--somearg"
+$ make ARGS="--somearg"
 ```
 
 #### Windows

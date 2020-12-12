@@ -6,7 +6,7 @@ This document attempts to explain how the project's build-system works, as well 
   - [setup](#setup)
   - [all](#all)
 - [Macro Definitions (Preamble)](#macro-definitions)
-- [Custom Functions](#custom-functions)
+  - [Custom Functions](#custom-functions)
 
 ## Targets
 This section describes most of the Makefile's functionality target-by-target, where we explain how they each execute step-by-step.
