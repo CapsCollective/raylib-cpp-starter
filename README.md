@@ -76,6 +76,21 @@ While separate compilation works quite well in most scenarios, it's not magic, a
 3. Including widely-scoped files (like the whole of `raylib-cpp.hpp`) will add all of its own includes as dependent and increase the build time
 4. Placing includes in `.h` files instead of forward-declarations will also increase recursive includes and therefore the build time
 
+### Passing Args to the Executable
+For working with some projects, you may want to pass arguments to the program once it's been built. This can be achieved by assigning values to the `ARGS` flag in the Makefile like below:
+
+#### macOS & Linux
+
+```console
+$ make AGRS="--somearg"
+```
+
+#### Windows
+
+```console
+> mingw32-make ARGS="--somearg"
+```
+
 ### Specifying a Non-Default Compiler
 If you want to use a compiler for your platform that isn't the default for your system (or potentially you would like to explicitly state it), you can make use of the system-implicit `CXX` variable like so:
 
@@ -90,10 +105,6 @@ $ make CXX=g++
 ```console
 > mingw32-make CXX=g++
 ```
-
-### Locking the Raylib Version
-
-*this functionality is currently in testing*
 
 ## Contributing
 

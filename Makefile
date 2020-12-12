@@ -89,7 +89,7 @@ $(buildDir)/%.o: src/%.cpp Makefile
 
 # Run the executable
 execute:
-	$(target)
+	$(target) $(ARGS)
 
 # Clean up all relevant files
 clean:
