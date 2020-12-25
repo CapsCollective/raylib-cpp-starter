@@ -1,5 +1,5 @@
 # How the Makefile Works
-This document attempts to explain how the project's build-system works, as well as general concepts in Makefile. It was created with the intention to help newcomers to C/C++ and Make understand how everything in the project is done, so that they can even dive in and make changes of their own if necessary.
+This document attempts to explain how the project's build-system works, as well as general concepts in Makefile. It was created with the intention to help newcomers to C/C++ and Make understand how everything in the project is done, so that they can even dive in and make changes of their own if necessary. The format of the document orders items from top to bottom in general order of appearance throughout [the actual project Makefile](/Makefile).
 
 ### Contents
 - [Macro Definitions](#macro-definitions)
@@ -7,16 +7,15 @@ This document attempts to explain how the project's build-system works, as well 
   - [Global Macros](#global-macros)
   - [Platform-Specific Macros](#platform-specific-macros)
 - [Targets](#targets)
+  - [.PHONY](#phony)
   - [setup](#setup)
   - [all](#all)
-  - [.PHONY](#phony)
 
 ## Macro Definitions
 #### This section is still being written
 
 ### Custom Functions
-
-Some text
+This subsection is still being written.
 
 ```Makefile
 rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
@@ -24,8 +23,7 @@ platformpth = $(subst /,$(PATHSEP),$1)
 ```
 
 ### Global Macros
-
-Some text
+This subsection is still being written.
 
 ```Makefile
 buildDir := bin
@@ -39,8 +37,7 @@ linkFlags = -L lib/$(platform) -l raylib
 ```
 
 ### Platform-Specific Macros
-
-Some text
+This subsection is still being written.
 
 ```Makefile
 ifeq ($(OS), Windows_NT)
@@ -81,7 +78,16 @@ endif
 ```
 
 ## Targets
-This section describes most of the Makefile's functionality target-by-target, where we explain how they each execute step-by-step.
+This section describes most of the Makefile's functionality by explaning of the function of the top level targets, `setup` and `all`, intending to provide a wholistic understanding of the Makefile's processes from top to bottom.
+
+### .PHONY
+The `.PHONY` target is a special target in the world of Makefile, and is specifically used to note which targets "exist" and which are "phony". A target should theoretically refer to (in dev terms) an actual file or directory requirement of the project's build system (e.g. a static library file to link to the app), and so Make does some useful work in the background to work out whether changes have been made to certain files, running targets of only files that have had their dependencies changed since last run. In a more realistic sense, Make also recognises that not all targets will refer to real world files, and can be exluded from this "run only if new changes" behaviour using the `.PHONY` target.
+
+```Makefile
+.PHONY: all setup submodules execute clean
+```
+
+So as you can see above, the first target of the file lists all the other "phony" targets in the file as dependencies.
 
 ### setup
 The first target we get you to call before building the project is `setup`, which essentially pulls in all raylib and raylib-cpp dependencies, and then formats the project file structure.
@@ -133,11 +139,4 @@ lib: submodules
 Once all of these targets have been fulfilled, `setup` ends and your project should now contain a copy of the relevant static library for your platform in `/lib`, and all the necessary header files under `/include`.
 
 ### all
-#### This section is still being written
-
-### .PHONY
-#### This section is still being written
-
-```Makefile
-.PHONY: all setup submodules execute clean
-```
+This subsection is still being written
