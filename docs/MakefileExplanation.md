@@ -1,12 +1,84 @@
 # How the Makefile Works
 This document attempts to explain how the project's build-system works, as well as general concepts in Makefile. It was created with the intention to help newcomers to C/C++ and Make understand how everything in the project is done, so that they can even dive in and make changes of their own if necessary.
 
-#### Contents
+### Contents
+- [Macro Definitions](#macro-definitions)
+  - [Custom Functions](#custom-functions)
+  - [Global Macros](#global-macros)
+  - [Platform-Specific Macros](#platform-specific-macros)
 - [Targets](#targets)
   - [setup](#setup)
   - [all](#all)
-- [Macro Definitions (Preamble)](#macro-definitions)
-  - [Custom Functions](#custom-functions)
+  - [.PHONY](#phony)
+
+## Macro Definitions
+#### This section is still being written
+
+### Custom Functions
+
+Some text
+
+```Makefile
+rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+platformpth = $(subst /,$(PATHSEP),$1)
+```
+
+### Global Macros
+
+Some text
+
+```Makefile
+buildDir := bin
+executable := app
+target := $(buildDir)/$(executable)
+sources := $(call rwildcard,src/,*.cpp)
+objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
+depends := $(patsubst %.o, %.d, $(objects))
+compileFlags := -std=c++17 -I include
+linkFlags = -L lib/$(platform) -l raylib
+```
+
+### Platform-Specific Macros
+
+Some text
+
+```Makefile
+ifeq ($(OS), Windows_NT)
+	# Set Windows macros
+	platform := Windows
+	CXX ?= g++
+	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+	libGenDir := src
+	THEN := &&
+	PATHSEP := \$(BLANK)
+	MKDIR := -mkdir
+	RM := -del /q
+	COPY = -robocopy "$(call platformpth,$1)" "$(call platformpth,$2)" $3
+else
+	# Check for MacOS/Linux
+	UNAMEOS := $(shell uname)
+	ifeq ($(UNAMEOS), Linux)
+		# Set Linux macros
+		platform := Linux
+		CXX ?= g++
+		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11
+	endif
+	ifeq ($(UNAMEOS), Darwin)
+		# Set macOS macros
+		platform := macOS
+		CXX ?= clang++
+		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
+		libGenDir := src
+	endif
+
+	# Set UNIX macros
+	THEN := ;
+	PATHSEP := /
+	MKDIR := mkdir -p
+	RM := rm -rf
+	COPY = cp $1$(PATHSEP)$3 $2
+endif
+```
 
 ## Targets
 This section describes most of the Makefile's functionality target-by-target, where we explain how they each execute step-by-step.
@@ -63,8 +135,9 @@ Once all of these targets have been fulfilled, `setup` ends and your project sho
 ### all
 #### This section is still being written
 
-## Macro Definitions
+### .PHONY
 #### This section is still being written
 
-### Custom Functions
-#### This section is still being written
+```Makefile
+.PHONY: all setup submodules execute clean
+```
