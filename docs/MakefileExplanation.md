@@ -12,18 +12,19 @@ This document attempts to explain how the project's build-system works, as well 
   - [all](#all)
 
 ## Macro Definitions
-#### This section is still being written
+At the top of the Makefile, macros are defined to be used within the ensuing targets. Macros provide two valuable uses throughout the file: defined values (read variables) that can be used repeatedly throughout the program, and functions that can be called to manipulate certain inputs. The macros in this file are arranged in the following groups, in the following order: custom functions, globals, and platform-specifics.
 
 ### Custom Functions
-This subsection is still being written.
+There are two custom functions defined for the Makefile, `rwildcard` and `platformpth`, and appear in the file as follows:
 
 ```Makefile
 rwildcard = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 platformpth = $(subst /,$(PATHSEP),$1)
 ```
+Simply put, `rwildcard` takes a glob pattern and **recursively** searches through the project files and subdirectories, for matching files by pattern. `platformpth` takes a UNIX-style path and formats it for the current platform (e.g. `platformpth(/bin/app)` results in `\bin\app` on Windows).
 
 ### Global Macros
-This subsection is still being written.
+The "global" macros are platform-agnostic values that are mostly used for defining compiler-related variables as below:
 
 ```Makefile
 buildDir := bin
@@ -36,8 +37,10 @@ compileFlags := -std=c++17 -I include
 linkFlags = -L lib/$(platform) -l raylib
 ```
 
+In this snippet there are two different assignment operators used, `:=` meaning "instant, static assign", and `=` meaning lazy assign, where the macro will only be assigned on use (this is useful when it relies on another macro that may not yet be defined). The operator `?=` is also used in cases where assignment is contingent on the variable being previously undefined. Finally, the `+=` operator is used to append content to a previously defined macro.
+
 ### Platform-Specific Macros
-This subsection is still being written.
+The final grouping of macros in the Makefile relate to those that differ on a per-platform basis. The structure uses nested if-statements to first determine whether the current platform is Windows or not to assign macros. If it is not Windows, it then checks whether the current platform is Linux or macOS and assigns macros accordingly.
 
 ```Makefile
 ifeq ($(OS), Windows_NT)
@@ -76,6 +79,8 @@ else
 	COPY = cp $1$(PATHSEP)$3 $2
 endif
 ```
+
+The macros defined above primarily contain platform-specific syntax for common functionality, as well as variables used during the compilation processes on each platform. For example, the `COPY` macro contains a functioning file copy command for each platform so that targets can easily specify a single command (`COPY`) that works on both UNIX and Windows systems. Another example of content pertains to the `linkFlags` macro, in which each platform must specify a series of libraries to link during compilation.
 
 ## Targets
 This section describes most of the Makefile's functionality by explaning of the function of the top level targets, `setup` and `all`, intending to provide a wholistic understanding of the Makefile's processes from top to bottom.
