@@ -145,3 +145,41 @@ Once all of these targets have been fulfilled, `setup` ends and your project sho
 
 ### all
 This subsection is still being written
+
+```Makefile
+all: $(target) execute clean
+```
+
+```Makefile
+$(target): $(objects)
+	$(CXX) $(objects) -o $(target) $(linkFlags)
+```
+
+```Makefile
+$(buildDir)/%.o: src/%.cpp Makefile
+	$(MKDIR) $(call platformpth, $(@D))
+	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@
+```
+
+```Makefile
+-include $(depends)
+```
+
+```Makefile
+$(target): $(objects)
+	$(CXX) $(objects) -o $(target) $(linkFlags)
+```
+
+```Makefile
+all: $(target) execute clean
+```
+
+```Makefile
+execute:
+	$(target) $(ARGS)
+```
+
+```Makefile
+clean:
+	$(RM) $(call platformpth, $(buildDir)/*)
+```
