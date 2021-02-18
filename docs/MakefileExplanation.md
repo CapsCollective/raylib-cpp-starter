@@ -144,27 +144,34 @@ lib: submodules
 Once all of these targets have been fulfilled, `setup` ends and your project should now contain a copy of the relevant static library for your platform in `/lib`, and all the necessary header files under `/include`.
 
 ### all
-This subsection is still being written
+The target name `all` is used as a common convention as being the default target in any Makefile, and what makes it default is that it's the first target defined (aside from the the reserved target of `.PHONY`). In our case we consider the default behaviour of our build system as compiling, running and then cleaning up the build, avoiding including the steps defined in `setup`.
 
+The first line of the target simply lists its dependencies in order of execution: the application target (with its name defined by the `target` variable), the `execute` target to run the program, and finally `clean` to tidy up post-build.
 ```Makefile
 all: $(target) execute clean
 ```
 
+The application target is first to run, and contains the instruction of compiling the program into the `target` file using the defined `CXX` command on a series of object files and linker flags. However this also contains a number of prerequisites as all object files list in `objects` must exist and be up to date. With this being the case, the Makefile will run the relevant target for each object file.
 ```Makefile
 $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 ```
 
+As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create and necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html).
 ```Makefile
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
 	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@
 ```
+That all being said, there are still two dependancies for the target, the `.cpp` files, and the Makefile itself. One might wonder why either of these need to be dependencies, given that without them, there would be nothing to compile and no instructions with which to compile it, however there is definitely some intention behind this. Firstly, the aforementioned automatic variables of `$<` and `$@` require a list of dependencies to iterate through, and secondly, we want to make sure everything is up-to-date. For instance, changing a `.cpp` file should trigger this step to run again for that file, or changing the Makefile should warrant a full recompilation.
 
+This is where things get a little hairy. There is a common scenario where one might change a `.cpp` or `.h` file that is included by another, and as such the changed file will recompile, but none that depend on it. So how can we track this dependency? The answer is by cheating, using the power of the C/C++ compiler. The flags `-MMD` and `-MP` in the compile command tell the compiler to automatically generate a list of file dependencies for each file as it goes. These files are then output to the `/bin/` directory alongside their matching `.o` files for later reference, containing automatically generated Makefile targets.
+
+One might ask how these are then read back in and used, well that is done with another piece of Makefile magic: the `include` command, which when added to a Makefile, will import the content of any specified file to its body. The below command is entirely responsible for doing this, and the output of the operation is ignored by prefacing it with a dash.
 ```Makefile
 -include $(depends)
 ```
-
+Now, finally returning from two levels of indirection in targets, the program can come back to the application target and link the newly generated and updated object files into the program, alongside any raylib and binding components.
 ```Makefile
 $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
