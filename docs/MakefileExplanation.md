@@ -177,15 +177,13 @@ $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 ```
 
-```Makefile
-all: $(target) execute clean
-```
-
+After this, the execute target will simply attempt to run the program from the command line with any supplied arguments.
 ```Makefile
 execute:
 	$(target) $(ARGS)
 ```
 
+Once the application is closed, crashed, or otherwise ended, the clean command will then be run (for the appropriate platform path and command), by deleting the `/bin/` directory, including object files, dependency files and the application itself. This prepares the build system for a fresh compilation.
 ```Makefile
 clean:
 	$(RM) $(call platformpth, $(buildDir)/*)
