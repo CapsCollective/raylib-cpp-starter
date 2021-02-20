@@ -157,7 +157,7 @@ $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 ```
 
-As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create and necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html).
+As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create all necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html).
 ```Makefile
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
@@ -165,7 +165,7 @@ $(buildDir)/%.o: src/%.cpp Makefile
 ```
 That all being said, there are still two dependancies for the target, the `.cpp` files, and the Makefile itself. One might wonder why either of these need to be dependencies, given that without them, there would be nothing to compile and no instructions with which to compile it, however there is definitely some intention behind this. Firstly, the aforementioned automatic variables of `$<` and `$@` require a list of dependencies to iterate through, and secondly, we want to make sure everything is up-to-date. For instance, changing a `.cpp` file should trigger this step to run again for that file, or changing the Makefile should warrant a full recompilation.
 
-This is where things get a little hairy. There is a common scenario where one might change a `.cpp` or `.h` file that is included by another, and as such the changed file will recompile, but none that depend on it. So how can we track this dependency? The answer is by cheating, using the power of the C/C++ compiler. The flags `-MMD` and `-MP` in the compile command tell the compiler to automatically generate a list of file dependencies for each file as it goes. These files are then output to the `/bin/` directory alongside their matching `.o` files for later reference, containing automatically generated Makefile targets.
+This is where things get a little hairy. There is a common scenario where one might change a `.cpp` or `.h` file that is included by another, and as such the changed file will recompile, but none that depend on it. So how can we track this dependency? The answer is by cheating, using the power of the C/C++ compiler. The flags `-MMD` and `-MP` in the compile command tell the compiler to automatically generate a list of file dependency targets for each file as it goes. These files are then output to the `/bin/` directory alongside their matching `.o` files for later reference, containing automatically generated Makefile targets.
 
 One might ask how these are then read back in and used, well that is done with another piece of Makefile magic: the `include` command, which when added to a Makefile, will import the content of any specified file to its body. The below command is entirely responsible for doing this, and the output of the operation is ignored by prefacing it with a dash.
 ```Makefile
