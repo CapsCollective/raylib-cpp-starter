@@ -47,11 +47,11 @@ ifeq ($(OS), Windows_NT)
 	# Set Windows macros
 	platform := Windows
 	CXX ?= g++
-	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows
+	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows -static -static-libgcc -static-libstdc++
 	libGenDir := src
 	THEN := &&
 	PATHSEP := \$(BLANK)
-	MKDIR := -mkdir
+	MKDIR := -mkdir -p
 	RM := -del /q
 	COPY = -robocopy "$(call platformpth,$1)" "$(call platformpth,$2)" $3
 else
