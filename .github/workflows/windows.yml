@@ -21,6 +21,12 @@ jobs:
       run: mingw32-make bin/app
       shell: cmd
       
+    - name: 'export binary'
+      uses: actions/upload-artifact@v2
+      with:
+          name: app
+          path: bin/app.exe
+      
     - name: make clean
       run: mingw32-make clean
       shell: cmd
