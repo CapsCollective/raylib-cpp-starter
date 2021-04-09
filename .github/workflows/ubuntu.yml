@@ -21,6 +21,11 @@ jobs:
 
     - name: make bin/app
       run: make bin/app
+    - name: 'export binary'
+      uses: actions/upload-artifact@v2
+      with:
+          name: app
+          path: bin/app
     - name: make clean
       run: make clean
       
