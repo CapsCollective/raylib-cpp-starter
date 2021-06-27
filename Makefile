@@ -11,6 +11,9 @@ objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
 depends := $(patsubst %.o, %.d, $(objects))
 compileFlags := -std=c++17 -I include
 linkFlags = -L lib/$(platform) -l raylib
+ifdef MACRO_DEFS
+    macroDefines := -D $(MACRO_DEFS)
+endif
 
 # Check for Windows
 ifeq ($(OS), Windows_NT)
@@ -85,7 +88,7 @@ $(target): $(objects)
 # Compile objects to the build directory
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
-	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@
+	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@ $(macroDefines)
 
 # Run the executable
 execute:
