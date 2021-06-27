@@ -91,6 +91,21 @@ $ make ARGS="--somearg"
 > mingw32-make ARGS="--somearg"
 ```
 
+### Specifying Custom Macro Definitions
+You may also want to pass in your own macro definitions for certain configurations (such as setting log levels). You can pass in your definitions using the `MACRO_DEFS` flag:
+
+#### macOS & Linux
+
+```console
+$ make MACRO_DEFS=MY_MACRO
+```
+
+#### Windows
+
+```console
+> mingw32-make MACRO_DEFS=MY_MACRO
+```
+
 ### Specifying a Non-Default Compiler
 If you want to use a compiler for your platform that isn't the default for your system (or potentially you would like to explicitly state it), you can make use of the system-implicit `CXX` variable like so:
 
