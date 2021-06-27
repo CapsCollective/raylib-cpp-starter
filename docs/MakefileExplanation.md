@@ -35,9 +35,12 @@ objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
 depends := $(patsubst %.o, %.d, $(objects))
 compileFlags := -std=c++17 -I include
 linkFlags = -L lib/$(platform) -l raylib
+ifdef MACRO_DEFS
+    macroDefines := -D $(MACRO_DEFS)
+endif
 ```
 
-In this snippet there are two different assignment operators used, `:=` meaning "instant, static assign", and `=` meaning lazy assign, where the macro will only be assigned on use (this is useful when it relies on another macro that may not yet be defined). The operator `?=` is also used in cases where assignment is contingent on the variable being previously undefined. Finally, the `+=` operator is used to append content to a previously defined macro.
+In this snippet there are two different assignment operators used, `:=` meaning "instant, static assign", and `=` meaning lazy assign, where the macro will only be assigned on use (this is useful when it relies on another macro that may not yet be defined). The operator `?=` is also used in cases where assignment is contingent on the variable being previously undefined. Finally, the `+=` operator is used to append content to a previously defined macro. At the very end, it checks to see if any macros were defined in the `Makefile` declaration and adds he macros to our compilation steps.
 
 ### Platform-Specific Macros
 The final grouping of macros in the Makefile relate to those that differ on a per-platform basis. The structure uses nested if-statements to first determine whether the current platform is Windows or not to assign macros. If it is not Windows, it then checks whether the current platform is Linux or macOS and assigns macros accordingly.
@@ -157,11 +160,11 @@ $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 ```
 
-As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create all necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html).
+As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create all necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html). Finally, it includes any custom macros that we defined into each of these files. 
 ```Makefile
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
-	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@
+	$(CXX) -MMD -MP -c $(compileFlags) $< -o $@ $(macroDefines)
 ```
 That all being said, there are still two dependancies for the target, the `.cpp` files, and the Makefile itself. One might wonder why either of these need to be dependencies, given that without them, there would be nothing to compile and no instructions with which to compile it, however there is definitely some intention behind this. Firstly, the aforementioned automatic variables of `$<` and `$@` require a list of dependencies to iterate through, and secondly, we want to make sure everything is up-to-date. For instance, changing a `.cpp` file should trigger this step to run again for that file, or changing the Makefile should warrant a full recompilation.
 
