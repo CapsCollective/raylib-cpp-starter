@@ -40,7 +40,7 @@ ifdef MACRO_DEFS
 endif
 ```
 
-In this snippet there are two different assignment operators used, `:=` meaning "instant, static assign", and `=` meaning lazy assign, where the macro will only be assigned on use (this is useful when it relies on another macro that may not yet be defined). The operator `?=` is also used in cases where assignment is contingent on the variable being previously undefined. Finally, the `+=` operator is used to append content to a previously defined macro. At the very end, it checks to see if any macros were defined in the `Makefile` declaration and adds he macros to our compilation steps.
+In this snippet there are two different assignment operators used, `:=` meaning "instant, static assign", and `=` meaning lazy assign, where the macro will only be assigned on use (this is useful when it relies on another macro that may not yet be defined). The operator `?=` is also used in cases where assignment is contingent on the variable being previously undefined. Finally, the `+=` operator is used to append content to a previously defined macro. At the very end, it checks to see if any macros were defined in the `Makefile` declaration and adds them to our compilation steps.
 
 ### Platform-Specific Macros
 The final grouping of macros in the Makefile relate to those that differ on a per-platform basis. The structure uses nested if-statements to first determine whether the current platform is Windows or not to assign macros. If it is not Windows, it then checks whether the current platform is Linux or macOS and assigns macros accordingly.
@@ -160,7 +160,7 @@ $(target): $(objects)
 	$(CXX) $(objects) -o $(target) $(linkFlags)
 ```
 
-As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create all necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html). Finally, it includes any custom macros that we defined into each of these files. 
+As such, the target `$(buildDir)/%.o` is responsible for ensuring the creation and update of object files (`.o` files). The target will create all necessary subdirectory structures needed for the files, and then compile each `.cpp` file in the source directory into an object file using a number of rather terse, [automatic variables that you can read up on here](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html). Finally, it includes any custom macros that we defined for each of these files. 
 ```Makefile
 $(buildDir)/%.o: src/%.cpp Makefile
 	$(MKDIR) $(call platformpth, $(@D))
