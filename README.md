@@ -92,18 +92,18 @@ $ make ARGS="--somearg"
 ```
 
 ### Specifying Custom Macro Definitions
-You may also want to pass in your own macro definitions for certain configurations (such as setting log levels). You can pass in your definitions using the `MACRO_DEFS` flag:
+You may also want to pass in your own macro definitions for certain configurations (such as setting log levels). You can pass in your definitions using `CXXFLAGS`:
 
 #### macOS & Linux
 
 ```console
-$ make MACRO_DEFS=MY_MACRO
+$ make CXXFLAGS=-DMY_MACRO=1
 ```
 
 #### Windows
 
 ```console
-> mingw32-make MACRO_DEFS=MY_MACRO
+> mingw32-make CXXFLAGS=-DMY_MACRO=1
 ```
 
 ### Specifying a Non-Default Compiler
@@ -127,9 +127,9 @@ $ make CXX=g++
 It's pretty simple actually:
 
 1. Fork it from [here](https://github.com/CapsCollective/raylib-cpp-starter/fork)
-2. Create your feature branch (git checkout -b cool-new-feature)
-3. Commit your changes (git commit -m "Added some feature")
-4. Push to the branch (git push origin cool-new-feature)
+2. Create your feature branch (`git checkout -b cool-new-feature`)
+3. Commit your changes (`git commit -m "Added some feature"`)
+4. Push to the branch (`git push origin cool-new-feature`)
 5. Create a new pull request for it!
 
 ### Contributors
