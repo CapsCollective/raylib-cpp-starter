@@ -137,6 +137,7 @@ It's pretty simple actually:
 - [Raelr](https://github.com/Raelr) Aryeh Zinn - co-creator, maintainer
 - [mTvare6](https://github.com/mTvare6) mTvare6 - contributor
 - [rafaeldelboni](https://github.com/rafaeldelboni) Rafael Delboni - contributor
+- [jason-cannon](https://github.com/jason-cannon) Jason Cannon - contributor
 
 ## Licence
 
