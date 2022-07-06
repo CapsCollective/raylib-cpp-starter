@@ -71,15 +71,15 @@ submodules:
 # Copy the relevant header files into includes
 include: submodules
 	$(MKDIR) $(call platformpth, ./include)
-	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raylib.h)
-	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raymath.h)
+	$(call COPY,vendor/raylib/src,./include,raylib.h)
+	$(call COPY,vendor/raylib/src,./include,raymath.h)
 	$(call COPY,vendor/raylib-cpp/include,./include,*.hpp)
 
 # Build the raylib static library file and copy it into lib
 lib: submodules
-	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
+	cd vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
 	$(MKDIR) $(call platformpth, lib/$(platform))
-	$(call COPY,vendor/raylib-cpp/vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
+	$(call COPY,vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
 
 # Link the program and create the executable
 $(target): $(objects)

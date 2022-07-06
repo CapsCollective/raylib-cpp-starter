@@ -1,3 +1,6 @@
 [submodule "vendor/raylib-cpp"]
 	path = vendor/raylib-cpp
 	url = https://github.com/robloach/raylib-cpp
+[submodule "vendor/raylib"]
+	path = vendor/raylib
+	url = https://github.com/raysan5/raylib
