@@ -24,7 +24,6 @@ ifeq ($(OS), Windows_NT)
 	platform := Windows
 	CXX ?= g++
 	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows -static -static-libgcc -static-libstdc++
-	libGenDir := src
 	THEN := &&
 	PATHSEP := \$(BLANK)
 	MKDIR := -mkdir -p
@@ -38,14 +37,12 @@ else
 		platform := Linux
 		CXX ?= g++
 		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11
-		libGenDir := src
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
 		platform := macOS
 		CXX ?= clang++
 		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libGenDir := src
 	endif
 
 	# Set UNIX macros
@@ -80,7 +77,7 @@ include: submodules
 lib: submodules
 	cd vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
 	$(MKDIR) $(call platformpth, lib/$(platform))
-	$(call COPY,vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
+	$(call COPY,vendor/raylib/src,lib/$(platform),libraylib.a)
 
 # Link the program and create the executable
 $(target): $(objects)
