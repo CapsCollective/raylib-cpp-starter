@@ -51,7 +51,6 @@ ifeq ($(OS), Windows_NT)
 	platform := Windows
 	CXX ?= g++
 	linkFlags += -Wl,--allow-multiple-definition -pthread -lopengl32 -lgdi32 -lwinmm -mwindows -static -static-libgcc -static-libstdc++
-	libGenDir := src
 	THEN := &&
 	PATHSEP := \$(BLANK)
 	MKDIR := -mkdir -p
@@ -71,7 +70,6 @@ else
 		platform := macOS
 		CXX ?= clang++
 		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-		libGenDir := src
 	endif
 
 	# Set UNIX macros
@@ -111,10 +109,10 @@ include: submodules
 	...
 ```
 
-`submodules` is a very simple target that will update the git submodules in the project recursively, pulling in the current raylib and raylib-cpp repositories. You can [read more about git submodules here](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+`submodules` is a very simple target that will update the git submodules in the project recursively, pulling in the current raylib and raylib-cpp repositories as a [shallow clone](https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/) using the `--depth 1` option. You can [read more about git submodules here](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 ```Makefile
 submodules:
-	git submodule update --init --recursive
+	git submodule update --init --recursive --depth 1
 ```
 
 Having satisfied `submodules` and now returning to `include`, we can being to run its body (as can be seen below).
@@ -141,7 +139,7 @@ To complete the target, it then copies that library file into the relevant direc
 lib: submodules
 	cd vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
  	$(MKDIR) $(call platformpth, lib/$(platform))
- 	$(call COPY,vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
+ 	$(call COPY,vendor/raylib/src,lib/$(platform),libraylib.a)
 ```
 
 Once all of these targets have been fulfilled, `setup` ends and your project should now contain a copy of the relevant static library for your platform in `/lib`, and all the necessary header files under `/include`.
