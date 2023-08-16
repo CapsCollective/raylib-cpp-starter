@@ -133,7 +133,7 @@ It's pretty simple actually:
 5. Create a new pull request for it!
 
 ### Contributors
-- [J-Mo63](https://github.com/J-Mo63) Jonathan Moallem - co-creator, maintainer
+- [jonjondev](https://github.com/jonjondev) Jonathan Moallem - co-creator, maintainer
 - [Raelr](https://github.com/Raelr) Aryeh Zinn - co-creator, maintainer
 - [mTvare6](https://github.com/mTvare6) mTvare6 - contributor
 - [rafaeldelboni](https://github.com/rafaeldelboni) Rafael Delboni - contributor
