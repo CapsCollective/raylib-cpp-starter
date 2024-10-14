@@ -77,7 +77,7 @@ $ sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel 
 For the project build system to function correctly, you will need to have Git installed on your system if it isn't already (it's a good idea to have it anyway - take it from us). You can install it by [downloading it from here](https://git-scm.com/download/win) and going through the setup wizard.
 
 ### Installing MinGW
-Building raylib libraries requires the installation of MinGW ([32](http://www.mingw.org/) and [64](http://mingw-w64.org/doku.php/download) bit versions). Please ensure that you link MinGW's `bin` directory to your system environment variables for BOTH the 32 and 64 bit versions. You can follow the instructions here for the [32-bit](https://www.youtube.com/watch?v=sXW2VLrQ3Bs) and here for the [64-bit](https://code.visualstudio.com/docs/cpp/config-mingw) bit versions.
+Building raylib libraries requires the installation of MinGW ([32](https://mingw.osdn.io) and [64](http://mingw-w64.org/doku.php/download) bit versions). Please ensure that you link MinGW's `bin` directory to your system environment variables for BOTH the 32 and 64 bit versions. You can follow the instructions here for the [32-bit](https://www.youtube.com/watch?v=sXW2VLrQ3Bs) and here for the [64-bit](https://code.visualstudio.com/docs/cpp/config-mingw) bit versions.
 
 After installing MinGW, you should have G++ installed. You can verify this by running:
 ```console
