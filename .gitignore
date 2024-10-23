@@ -2,3 +2,4 @@ include
 lib
 bin
 .idea
+.DS_Store
