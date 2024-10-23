@@ -12,24 +12,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: update apt
       run: sudo apt-get update
+
     - name: install raylib dependencies
       run: sudo apt install libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev
+
     - name: make setup
       run: make setup
 
     - name: make bin/app
       run: make bin/app
+
     - name: 'export binary'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
           name: app
           path: bin/app
+
     - name: make clean
       run: make clean
       
     - name: make bin/app CXX=g++
       run: make bin/app CXX=g++
+    
     - name: make clean
       run: make clean
