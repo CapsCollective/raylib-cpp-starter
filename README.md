@@ -139,6 +139,8 @@ It's pretty simple actually:
 - [rafaeldelboni](https://github.com/rafaeldelboni) Rafael Delboni - contributor
 - [jason-cannon](https://github.com/jason-cannon) Jason Cannon - contributor
 - [return215](https://github.com/return215) Muhammad Hidayat - contributor
+- [Samuel Asher Rivello](https://github.com/SamuelAsherRivello) - contributor
+
 
 ## Licence
 
